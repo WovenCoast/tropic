@@ -1,0 +1,24 @@
+{
+  "name": "flamey",
+  "version": "0.0.1",
+  "description": "A cute way to flame up your server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WovenCoast/flamey.git"
+  },
+  "author": "FlameXode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WovenCoast/flamey/issues"
+  },
+  "homepage": "https://github.com/WovenCoast/flamey#readme",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js",
+    "dotenv": "^8.1.0",
+    "klasa": "github:dirigeants/klasa#master"
+  }
+}

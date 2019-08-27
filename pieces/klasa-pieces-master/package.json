@@ -1,0 +1,18 @@
+{
+	"name": "klasa-pieces",
+	"description": "This repository contains the various *Pieces* submitted by users and collaborators.",
+	"scripts": {
+		"test:lint": "eslint .",
+		"lint": "npm run test:lint -- --fix"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dirigeants/klasa-pieces.git"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/dirigeants/klasa-pieces#readme",
+	"devDependencies": {
+		"eslint": "^4.18.2",
+		"eslint-config-klasa": "github:dirigeants/klasa-lint"
+	}
+}
