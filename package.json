@@ -19,6 +19,7 @@
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.1.0",
-    "klasa": "github:dirigeants/klasa#master"
+    "klasa": "github:dirigeants/klasa",
+    "mongodb": "^3.3.1"
   }
 }

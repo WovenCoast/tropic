@@ -2,6 +2,7 @@ dependencies:
   discord.js: github.com/discordjs/discord.js/4c088123026e520f46cb4ee21bb90140d2501215
   dotenv: 8.1.0
   klasa: github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev
+  mongodb: 3.3.1
 lockfileVersion: 5.1
 packages:
   /abort-controller/3.0.0:
@@ -20,6 +21,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=
+  /bson/1.1.1:
+    dev: false
+    engines:
+      node: '>=0.6.19'
+    resolution:
+      integrity: sha512-jCGVYLoYMHDkOsbwJZBCqwMHyH4c+wzgI9hG7Z6SZJRXWr+x58pdIbm2i9a/jFGCkRJqRUr8eoI7lDWa0hTkxg==
   /combined-stream/1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -76,6 +83,16 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
+  /mongodb/3.3.1:
+    dependencies:
+      bson: 1.1.1
+      require_optional: 1.0.1
+      safe-buffer: 5.2.0
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha512-Q92LLlPUTBj/Z4DyeznwPJjvgOYUcxZsBfek3Ba9mVhzH41n70vSubo+BmemI98kOefHTSncrTyb3OaxdLSgDw==
   /node-fetch/2.6.0:
     dev: false
     engines:
@@ -92,8 +109,37 @@ packages:
       ffmpeg-static: ^2.4.0
       node-opus: ^0.3.1
       opusscript: ^0.0.6
+    peerDependenciesMeta:
+      ffmpeg-static:
+        optional: true
+      node-opus:
+        optional: true
+      opusscript:
+        optional: true
     resolution:
       integrity: sha512-W+oxjRyjtd7hw3pefNZuc7YEZ6VICORJvVNfCPs0+7CsJ43CqMjGAYGjPL3hQ82vw03EVra+CiX4zisqOBUUGw==
+  /require_optional/1.0.1:
+    dependencies:
+      resolve-from: 2.0.0
+      semver: 5.7.1
+    dev: false
+    resolution:
+      integrity: sha512-qhM/y57enGWHAe3v/NcwML6a3/vfESLe/sGM2dII+gEO0BpKRUkWZow/tyloNqJyN6kXSl3RyyM8Ll5D/sJP8g==
+  /resolve-from/2.0.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-lICrIOlP+h2egKgEx+oUdhGWa1c=
+  /safe-buffer/5.2.0:
+    dev: false
+    resolution:
+      integrity: sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg==
+  /semver/5.7.1:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
   /setimmediate/1.0.5:
     dev: false
     resolution:
@@ -146,9 +192,11 @@ packages:
       zlib-sync: ^0.1.4
       zucc: ^0.1.0
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/4c088123026e520f46cb4ee21bb90140d2501215'
     version: 12.0.0-dev
 specifiers:
   discord.js: 'github:discordjs/discord.js'
   dotenv: ^8.1.0
-  klasa: 'github:dirigeants/klasa#master'
+  klasa: 'github:dirigeants/klasa'
+  mongodb: ^3.3.1
