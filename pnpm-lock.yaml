@@ -1,8 +1,13 @@
 dependencies:
-  discord.js: github.com/discordjs/discord.js/4c088123026e520f46cb4ee21bb90140d2501215
+  chokidar: 3.0.2
+  discord.js: github.com/discordjs/discord.js/89d9b0f498b797ab15d7d1452ef0e25a9085fd59
+  discord.js-lavalink: github.com/MrJacz/discord.js-lavalink/4632a1b7816edda425820c246d354d06a55dba79
   dotenv: 8.1.0
+  fs-nextra: 0.4.5
+  heapdump: 0.3.14
   klasa: github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev
   mongodb: 3.3.1
+  node-fetch: 2.6.0
 lockfileVersion: 5.1
 packages:
   /abort-controller/3.0.0:
@@ -13,6 +18,15 @@ packages:
       node: '>=6.5'
     resolution:
       integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
+  /anymatch/3.1.0:
+    dependencies:
+      normalize-path: 3.0.0
+      picomatch: 2.0.7
+    dev: false
+    engines:
+      node: '>= 8'
+    resolution:
+      integrity: sha512-Ozz7l4ixzI7Oxj2+cw+p0tVUt27BpaJ+1+q1TCeANWxHpvyn2+Un+YamBdfKu0uh8xLodGhoa1v7595NhKDAuA==
   /async-limiter/1.0.1:
     dev: false
     resolution:
@@ -21,12 +35,42 @@ packages:
     dev: false
     resolution:
       integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=
+  /binary-extensions/2.0.0:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-Phlt0plgpIIBOGTT/ehfFnbNlfsDEiqmzE2KRXoX1bLIlir4X/MR+zSyBEkL05ffWgnRSf/DXv+WrUAVr93/ow==
+  /braces/3.0.2:
+    dependencies:
+      fill-range: 7.0.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
   /bson/1.1.1:
     dev: false
     engines:
       node: '>=0.6.19'
     resolution:
       integrity: sha512-jCGVYLoYMHDkOsbwJZBCqwMHyH4c+wzgI9hG7Z6SZJRXWr+x58pdIbm2i9a/jFGCkRJqRUr8eoI7lDWa0hTkxg==
+  /chokidar/3.0.2:
+    dependencies:
+      anymatch: 3.1.0
+      braces: 3.0.2
+      glob-parent: 5.0.0
+      is-binary-path: 2.1.0
+      is-glob: 4.0.1
+      normalize-path: 3.0.0
+      readdirp: 3.1.2
+    dev: false
+    engines:
+      node: '>= 8'
+    optionalDependencies:
+      fsevents: 2.0.7
+    resolution:
+      integrity: sha512-c4PR2egjNjI1um6bamCQ6bUNPDiyofNQruHvKgHQ4gDUP/ITSVSzNsiI5OWtHOsX323i5ha/kk4YmOZ1Ktg7KA==
   /combined-stream/1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -53,7 +97,15 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
-  /form-data/2.5.0:
+  /fill-range/7.0.1:
+    dependencies:
+      to-regex-range: 5.0.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
+  /form-data/2.5.1:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -62,13 +114,65 @@ packages:
     engines:
       node: '>= 0.12'
     resolution:
-      integrity: sha512-WXieX3G/8side6VIqx44ablyULoGruSde5PNTxoUyo5CeyAMX6nVWUd0rgist/EuX655cjhUhTo1Fo3tRYqbcA==
+      integrity: sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
   /fs-nextra/0.4.5:
     dev: false
     engines:
       node: '>=10.1.0'
     resolution:
       integrity: sha512-oY2o6j0izYzJWp2sow21SekkR3qeMZqHV5ZfNFvfKimFU7piw1/AWwiwbcWjuSfwrfCmHyHymWZOyNbKOzew5g==
+  /fsevents/2.0.7:
+    dev: false
+    engines:
+      node: ^8.16.0 || ^10.6.0 || >=11.0.0
+    optional: true
+    resolution:
+      integrity: sha512-a7YT0SV3RB+DjYcppwVDLtn13UQnmg0SWZS7ezZD0UjnLwXmy8Zm21GMVGLaFGimIqcvyMQaOJBrop8MyOp1kQ==
+  /glob-parent/5.0.0:
+    dependencies:
+      is-glob: 4.0.1
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-Z2RwiujPRGluePM6j699ktJYxmPpJKCfpGA13jz2hmFZC7gKetzrWvg5KN3+OsIFmydGyZ1AVwERCq1w/ZZwRg==
+  /heapdump/0.3.14:
+    dependencies:
+      nan: 2.14.0
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-omSf+s4yDxHWsh8uNdzhDQFi9tkuBEaxn3pUnHetcEB4XD5L/bWDAFmtnSHP2HmtfnYqkaK6Y76TbhfSOPP7/A==
+  /is-binary-path/2.1.0:
+    dependencies:
+      binary-extensions: 2.0.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==
+  /is-extglob/2.1.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=
+  /is-glob/4.0.1:
+    dependencies:
+      is-extglob: 2.1.1
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-5G0tKtBTFImOqDnLB2hG6Bp2qcKEFduo4tZu9MT/H6NQv/ghhy30o55ufafxJ/LdH79LLs2Kfrn85TLKyA7BUg==
+  /is-number/7.0.0:
+    dev: false
+    engines:
+      node: '>=0.12.0'
+    resolution:
+      integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
   /mime-db/1.40.0:
     dev: false
     engines:
@@ -93,16 +197,32 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-Q92LLlPUTBj/Z4DyeznwPJjvgOYUcxZsBfek3Ba9mVhzH41n70vSubo+BmemI98kOefHTSncrTyb3OaxdLSgDw==
+  /nan/2.14.0:
+    dev: false
+    resolution:
+      integrity: sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
   /node-fetch/2.6.0:
     dev: false
     engines:
       node: 4.x || >=6.0.0
     resolution:
       integrity: sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  /normalize-path/3.0.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
   /pako/1.0.10:
     dev: false
     resolution:
       integrity: sha512-0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==
+  /picomatch/2.0.7:
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-oLHIdio3tZ0qH76NybpeneBhYVj0QFTfXEFTc/B3zKQspYfYYkWYgFsmzo+4kvId/bQRcNkVeguI3y+CD22BtA==
   /prism-media/1.1.0:
     dev: false
     peerDependencies:
@@ -118,6 +238,14 @@ packages:
         optional: true
     resolution:
       integrity: sha512-W+oxjRyjtd7hw3pefNZuc7YEZ6VICORJvVNfCPs0+7CsJ43CqMjGAYGjPL3hQ82vw03EVra+CiX4zisqOBUUGw==
+  /readdirp/3.1.2:
+    dependencies:
+      picomatch: 2.0.7
+    dev: false
+    engines:
+      node: '>= 8'
+    resolution:
+      integrity: sha512-8rhl0xs2cxfVsqzreYCvs8EwBfn/DhVdqtoLmw19uI3SC5avYX9teCurlErfpPXGmYtMHReGaP2RsLnFvz/lnw==
   /require_optional/1.0.1:
     dependencies:
       resolve-from: 2.0.0
@@ -144,6 +272,14 @@ packages:
     dev: false
     resolution:
       integrity: sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=
+  /to-regex-range/5.0.1:
+    dependencies:
+      is-number: 7.0.0
+    dev: false
+    engines:
+      node: '>=8.0'
+    resolution:
+      integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   /tweetnacl/1.0.1:
     dev: false
     resolution:
@@ -154,9 +290,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  /ws/7.1.2:
+    dependencies:
+      async-limiter: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-gftXq3XI81cJCgkUiAVixA0raD9IVmXqsylCrjRygw4+UOOGzPoxnQ6r/CnVL9i+mDncJo94tSkyrtuuQVBmrg==
+  github.com/MrJacz/discord.js-lavalink/4632a1b7816edda425820c246d354d06a55dba79:
+    dependencies:
+      ws: 7.1.2
+    dev: false
+    name: discord.js-lavalink
+    resolution:
+      registry: 'https://registry.npmjs.org/'
+      tarball: 'https://codeload.github.com/MrJacz/discord.js-lavalink/tar.gz/4632a1b7816edda425820c246d354d06a55dba79'
+    version: 2.2.3
   github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev:
     dependencies:
-      discord.js: github.com/discordjs/discord.js/4c088123026e520f46cb4ee21bb90140d2501215
+      discord.js: github.com/discordjs/discord.js/89d9b0f498b797ab15d7d1452ef0e25a9085fd59
       fs-nextra: 0.4.5
     dev: false
     engines:
@@ -169,10 +320,10 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/9ae936a59187b62517ae1591efa22c507c98391f'
     version: 0.5.0-dev
-  github.com/discordjs/discord.js/4c088123026e520f46cb4ee21bb90140d2501215:
+  github.com/discordjs/discord.js/89d9b0f498b797ab15d7d1452ef0e25a9085fd59:
     dependencies:
       abort-controller: 3.0.0
-      form-data: 2.5.0
+      form-data: 2.5.1
       node-fetch: 2.6.0
       pako: 1.0.10
       prism-media: 1.1.0
@@ -193,10 +344,15 @@ packages:
       zucc: ^0.1.0
     resolution:
       registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/4c088123026e520f46cb4ee21bb90140d2501215'
+      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/89d9b0f498b797ab15d7d1452ef0e25a9085fd59'
     version: 12.0.0-dev
 specifiers:
+  chokidar: ^3.0.2
   discord.js: 'github:discordjs/discord.js'
+  discord.js-lavalink: 'github:MrJacz/discord.js-lavalink'
   dotenv: ^8.1.0
+  fs-nextra: ^0.4.5
+  heapdump: ^0.3.14
   klasa: 'github:dirigeants/klasa'
   mongodb: ^3.3.1
+  node-fetch: ^2.6.0

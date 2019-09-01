@@ -1,7 +1,28 @@
 require('dotenv').config();
 const { Client } = require('klasa');
+const { Collection, MessageEmbed } = require('discord.js')
+const { PlayerManager } = require('discord.js-lavalink');
 
-const client = new Client({
+const shardCount = 1;
+const nodes = [
+    { host: "localhost", port: 2333, password: process.env.LAVALINK_PWD }
+];
+
+class FlameyClient extends Client {
+    constructor(...args) {
+        super(...args);
+        this.queue = new Collection()
+        this.player = null;
+        this.on('ready', () => {
+            this.player = new PlayerManager(client, nodes, {
+                user: client.user.id,
+                shards: shardCount
+            })
+        })
+    }
+}
+
+const client = new FlameyClient({
     clientOptions: {
         fetchAllMembers: false
     },
@@ -19,5 +40,8 @@ const client = new Client({
     cmdEditing: true,
     readyMessage: (client) => `Logged in as ${client.user.tag}!`
 })
+Client.defaultClientSchema.add('restart', folder => folder
+    .add('message', 'messagepromise')
+    .add('timestamp', 'bigint', { min: 0 }));
 
 client.login(process.env.DISCORD_TOKEN);

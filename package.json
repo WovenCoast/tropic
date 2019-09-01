@@ -17,9 +17,14 @@
   },
   "homepage": "https://github.com/WovenCoast/flamey#readme",
   "dependencies": {
+    "chokidar": "^3.0.2",
     "discord.js": "github:discordjs/discord.js",
+    "discord.js-lavalink": "github:MrJacz/discord.js-lavalink",
     "dotenv": "^8.1.0",
+    "fs-nextra": "^0.4.5",
+    "heapdump": "^0.3.14",
     "klasa": "github:dirigeants/klasa",
-    "mongodb": "^3.3.1"
+    "mongodb": "^3.3.1",
+    "node-fetch": "^2.6.0"
   }
 }

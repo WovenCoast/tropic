@@ -1,4 +1,5 @@
 const { Command, util: { isFunction } } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
 module.exports = class extends Command {
@@ -8,39 +9,51 @@ module.exports = class extends Command {
 			aliases: ['commands'],
 			guarded: true,
 			description: language => language.get('COMMAND_HELP_DESCRIPTION'),
-			usage: '(Command:command)'
-		});
-
-		this.createCustomResolver('command', (arg, possible, message) => {
-			if (!arg || arg === '') return undefined;
-			return this.client.arguments.get('command').run(arg, possible, message);
+			usage: '[Command:command]'
 		});
 	}
 
 	async run(message, [command]) {
+		const embed = new MessageEmbed()
+			.setColor('#34393F');
 		if (command) {
-			const info = [
-				`= ${command.name} = `,
-				isFunction(command.description) ? command.description(message.language) : command.description,
-				message.language.get('COMMAND_HELP_USAGE', command.usage.fullUsage(message)),
-				message.language.get('COMMAND_HELP_EXTENDED'),
-				isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp
-			].join('\n');
-			return message.sendMessage(info, { code: 'asciidoc' });
+			embed
+			.setTitle(toTitleCase(command.name))
+			.addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
+			.addField('Usage', command.usage.fullUsage(message))
+			.addField('Extended Help', isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp)
+			return message.channel.send(embed);
 		}
 		const help = await this.buildHelp(message);
 		const categories = Object.keys(help);
-		const helpMessage = [];
-		for (let cat = 0; cat < categories.length; cat++) {
-			helpMessage.push(`**${categories[cat]} Commands**:`, '```asciidoc');
-			const subCategories = Object.keys(help[categories[cat]]);
-			for (let subCat = 0; subCat < subCategories.length; subCat++) helpMessage.push(`= ${subCategories[subCat]} =`, `${help[categories[cat]][subCategories[subCat]].join('\n')}\n`);
-			helpMessage.push('```', '\u200b');
-		}
+		categories.forEach((category, index) => {
+			const subCategories = Object.keys(help[categories[index]]);
+			embed.addField(category + ' Commands', subCategories.map(subCat => `${subCat == 'General' ? '' : `**${subCat}** => `}\`${help[categories[index]][subCat].join('`, `')}\``))
+		})
+		return message.channel.send(embed);
+		// if (command) {
+		// 	const info = [
+		// 		`= ${command.name} = `,
+		// 		isFunction(command.description) ? command.description(message.language) : command.description,
+		// 		message.language.get('COMMAND_HELP_USAGE', command.usage.fullUsage(message)),
+		// 		message.language.get('COMMAND_HELP_EXTENDED'),
+		// 		isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp
+		// 	].join('\n');
+		// 	return message.sendMessage(info, { code: 'asciidoc' });
+		// }
+		// const help = await this.buildHelp(message);
+		// const categories = Object.keys(help);
+		// const helpMessage = [];
+		// for (let cat = 0; cat < categories.length; cat++) {
+		// 	helpMessage.push(`**${categories[cat]} Commands**:`, '```asciidoc');
+		// 	const subCategories = Object.keys(help[categories[cat]]);
+		// 	for (let subCat = 0; subCat < subCategories.length; subCat++) helpMessage.push(`= ${subCategories[subCat]} =`, `${help[categories[cat]][subCategories[subCat]].join('\n')}\n`);
+		// 	helpMessage.push('```', '\u200b');
+		// }
 
-		return message.author.send(helpMessage, { split: { char: '\u200b' } })
-			.then(() => { if (message.channel.type !== 'dm') message.sendLocale('COMMAND_HELP_DM'); })
-			.catch(() => { if (message.channel.type !== 'dm') message.sendLocale('COMMAND_HELP_NODM'); });
+		// return message.author.send(helpMessage, { split: { char: '\u200b' } })
+		// 	.then(() => { if (message.channel.type !== 'dm') message.sendLocale('COMMAND_HELP_DM'); })
+		// 	.catch(() => { if (message.channel.type !== 'dm') message.sendLocale('COMMAND_HELP_NODM'); });
 	}
 
 	async buildHelp(message) {
@@ -56,7 +69,7 @@ module.exports = class extends Command {
 					if (!has(help, command.category)) help[command.category] = {};
 					if (!has(help[command.category], command.subCategory)) help[command.category][command.subCategory] = [];
 					const description = isFunction(command.description) ? command.description(message.language) : command.description;
-					help[command.category][command.subCategory].push(`${prefix}${command.name.padEnd(longest)} :: ${description}`);
+					help[command.category][command.subCategory].push(command.name)//, `${prefix}${command.name.padEnd(longest)} :: ${description}`);
 				})
 				.catch(() => {
 					// noop
