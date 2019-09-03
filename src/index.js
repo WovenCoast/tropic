@@ -38,6 +38,22 @@ const client = new FlameyClient({
     typing: true,
     cmdPrompt: true,
     cmdEditing: true,
+    pieceDefaults: {
+        commands: {
+            cooldown: 1000,
+            promptLimit: 3
+        },
+        monitors: {
+            enabled: true,
+            ignoreBots: true,
+            ignoreSelf: true,
+            ignoreOthers: true,
+            ignoreWebhooks: true,
+            ignoreEdits: true,
+            ignoreBlacklistedUsers: true,
+            ignoreBlacklistedGuilds: true
+        }
+    },
     readyMessage: (client) => `Logged in as ${client.user.tag}!`
 })
 Client.defaultClientSchema.add('restart', folder => folder

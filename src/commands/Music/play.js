@@ -1,6 +1,9 @@
 const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 const { URLSearchParams } = require("url");
 const fetch = require("node-fetch");
+
+const cancelTerms = ['cancel', 'stop', 'abort']
 
 module.exports = class extends Command {
 
@@ -16,10 +19,23 @@ module.exports = class extends Command {
         if (!msg.member || !msg.member.voice.channel) return msg.reply(":x: You must be in a voice channel for this command.");
 
         const track = searchterm;
-        const [song] = await this.getSongs(`${msg.flags.soundcloud ? 'scsearch' : 'ytsearch'}: ${track}`);
-        if (!song) return msg.reply(":shrug: No songs found with that same term, try again!");
+        const songs = await this.getSongs(`${msg.flags.soundcloud ? 'scsearch' : 'ytsearch'}: ${track}`);
+        if (!songs[0]) return msg.reply(":shrug: No songs found with that same term, try again!");
+
+        var songIndex = 0;
+        if (msg.flags.search) {
+            const promptEmbed = new MessageEmbed()
+                .setColor('#34393F')
+                .setTitle('Choose a song from below! Send only the number of the song, or else it might not work')
+                .setFooter('Send the message "abort", "cancel" or "stop" to cancel the search');
+            songs.slice(0, 5).forEach((song, index) => song ? promptEmbed.addField(`${index + 1}: ${song.info.title.includes(song.info.author) ? song.info.title.split(song.info.author).join(`*${song.info.author}*`) : `(*${song.info.author}*) - ${song.info.title}`}`, `Length: **${this.parse(song.info.length)}**\nURL: ${song.info.uri}`) : null)
+            const promptMessage = await msg.prompt(promptEmbed);
+            if (cancelTerms.includes(promptMessage.content.toLowerCase())) return msg.reply(':white_check_mark: Cancelled!');
+            songIndex = parseInt(promptMessage.content) - 1;
+        }
 
         let serverQueue = this.client.queue.get(msg.guild.id);
+        const song = songs[songIndex];
         song.requestedBy = msg.author;
         if (!serverQueue) {
             const queueConstruct = {
@@ -34,12 +50,12 @@ module.exports = class extends Command {
             this.client.queue.set(msg.guild.id, queueConstruct);
 
             try {
-                queueConstruct.player = await this.client.player.join({
-                    guild: msg.guild.id,
-                    channel: msg.member.voice.channel.id,
-                    host: this.client.player.nodes.first().host
-                }, { selfdeaf: true });
-                this.play(msg.guild, queueConstruct.songs[0]);
+            queueConstruct.player = await this.client.player.join({
+                guild: msg.guild.id,
+                channel: msg.member.voice.channel.id,
+                host: this.client.player.nodes.first().host
+            }, { selfdeaf: true });
+            this.play(msg.guild, queueConstruct.songs[0]);
             } catch (error) {
                 console.error(`I could not join the voice channel: ${error}`);
                 this.client.queue.delete(msg.guild.id);
@@ -50,6 +66,14 @@ module.exports = class extends Command {
             serverQueue.songs.push(song);
             return msg.channel.send(`:white_check_mark: Successfully added **${song.info.title}** to queue!`);
         };
+    }
+
+    parse(length) {
+        const milliseconds = parseInt(length / 1000);
+        const seconds = parseInt(milliseconds % 60);
+        const minutes = parseInt((milliseconds / 60) % 60);
+        const hours = parseInt((milliseconds / 60) / 60);
+        return `${hours ? hours + ':' : ''}${minutes + ':' + (seconds < 10 ? '0' + seconds : seconds)}`;
     }
 
     async getSongs(search) {
@@ -69,7 +93,7 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(guild.id);
         if (!song) {
             serverQueue.textChannel.send(":octagonal_sign: No more queue to play. The player has been stopped")
-            client.player.leave(guild.id);
+            this.client.player.leave(guild.id);
             this.client.queue.delete(guild.id);
             return;
         } else {
