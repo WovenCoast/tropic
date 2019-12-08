@@ -16,7 +16,7 @@ module.exports = class extends Command {
         const serverQueue = this.client.queue.get(msg.guild.id);
         const tempSongs = []
         const pageLength = isNaN(msg.flags.length) ? this.pageLength : msg.flags.length;
-        if (!serverQueue) return msg.channel.send('This server doesn\'t have a queue');
+        if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         const embed = new MessageEmbed();
         embed
             .setColor('#34393F')

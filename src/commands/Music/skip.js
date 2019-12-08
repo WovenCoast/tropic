@@ -12,7 +12,7 @@ module.exports = class extends Command {
 
     async run(msg, [amount]) {
         let serverQueue = this.client.queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send(":x: This server doesn't have a queue");
+        if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (serverQueue.playing === false) serverQueue.playing = true;
         if (amount > 1) {
             serverQueue.loop ? serverQueue.songs.splice(0, amount - 1).forEach(e => serverQueue.songs.push(e)) : null;

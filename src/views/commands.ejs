@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<%- include('layouts/head') %>
+
+<body>
+    <%- include('layouts/navbar', {navbar}) %>
+
+    <main>
+        <div class="jumbotron jumbotron-fluid parallax">
+            <h1 class="display-4">Commands</h1>
+            <p class="lead">The tropics come with a lot of variety of things, don't want to miss on them</p>
+        </div>
+        <div class="jumbotron jumbotron-fluid" style="padding-top: 5px; padding-bottom: 10px; background-color: black;">
+            <h1 class="display-4 text-white">Key</h1>
+            <span class="badge badge-pill badge-primary">Required Argument <code
+                    style="color: white;">name:type[...|name: type] OR subcommand|subcommand</code></span>
+            <span class="badge badge-pill badge-danger">Optional Argument <code
+                    style="color: white;">name:type[...|name:type] OR subcommand|subcommand</code></span>
+        </div>
+        <div class="container">
+            <% Object.keys(commands).forEach(key => { %>
+            <div class="jumbotron">
+                <h1 class="display-4 text-primary"><%- key %></h1>
+                <% Object.keys(commands[key]).forEach(category => { %>
+                <% commands[key][category].forEach(command => { %>
+                <p><span class="text-black"><%- prefix %><%- command.name %></span>
+                    <% command.usage.forEach(arg => { %>
+                    <span
+                        class="badge badge-pill badge-<%- arg.required ? 'primary' : 'danger' %>"><%- arg.string.toLowerCase() %></span>
+                    <% }); %>
+                    <% }); %>
+                </p>
+                <% }); %>
+            </div>
+            <% }); %>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<%- include('layouts/head') %>
+
+<body>
+    <%- include('layouts/navbar', {navbar}) %>
+
+    <main>
+        <div class="jumbotron jumbotron-fluid parallax">
+            <h1 class="display-4">Create a Form</h1>
+            <p class="lead">Make a form that people can fill even on discord!</p>
+            <hr class="my-4">
+            <p>tropic.dev</p>
+        </div>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4 text-warning">Some info on your new form</h1>
+                <div class="form-group" id="nameForm">
+                    <label for="nameInput">Name of the form</label>
+                    <input type="text" class="form-control" id="nameInput">
+                </div>
+                <div class="form-group" id="descForm">
+                    <label for="descInput">Description of the form</label>
+                    <textarea class="form-control" id="descInput" rows="3"></textarea>
+                </div>
+                <div class="form-group" id="authForm">
+                    <label for="authorInput">Author of the form</label>
+                    <input type="text" class="form-control" id="authorInput" value="<%- user.id %>" disabled>
+                </div>
+                <div class="form-group" id="webhForm">
+                    <label for="webhookInput">Webhook of the form (Leave Empty if you want to send it to
+                        yourself)</label>
+                    <input type="url" class="form-control" id="webhookInput">
+                </div>
+            </div>
+            <div class="jumbotron">
+                <h1 class="display-4 text-warning">Questions list</h1>
+                <ul id="questionsList" class="list-group list-group-flush" style="width: 100%;"></ul>
+            </div>
+            <div class="jumbotron">
+                <h1 class="display-4 text-warning">Add another question</h1>
+                <div class="form-group">
+                    <label for="questionType">Type of Question</label>
+                    <select class="form-control" id="questionType" onchange="changeQuestionType()">
+                        <option value="text">Small Text</option>
+                        <option value="bigtext">Large Text</option>
+                        <option value="email">Email</option>
+                        <option value="range">Range</option>
+                        <option value="checkbox">Checkbox</option>
+                    </select>
+                </div>
+                <div class="form-group" id="textAdd">
+                    <label for="textInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="textHelp" id="textInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="textHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                </div>
+                <div class="form-group" id="bigtextAdd">
+                    <label for="bigtextInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="bigtextHelp" id="bigtextInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="bigtextHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                </div>
+                <div class="form-group" id="emailAdd">
+                    <label for="emailInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="emailHelp" id="emailInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="emailHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                </div>
+                <div class="form-group" id="rangeAdd">
+                    <label for="rangeInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="rangeHelp" id="rangeInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="rangeHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                    <label for="rangeMinInput">Minimum Number</label>
+                    <input type="number" class="form-control" id="rangeMinInput" placeholder="0">
+                    <label for="rangeMaxInput">Maximum Number</label>
+                    <input type="number" class="form-control" id="rangeMaxInput" placeholder="100">
+                </div>
+                <div class="form-group" id="checkboxAdd">
+                    <label for="checkboxInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="checkboxHelp" id="checkboxInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="checkboxHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                    <label for="checkboxListInput">Add to the list of checkboxes</label>
+                    <input type="text" class="form-control" id="checkboxListInput" placeholder="Hello World!">
+                    <ul class="list-group" id="checkboxList">
+                        <button style="padding: 0px;" onclick="addCheckboxOption()">
+                            <li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option
+                                using the text above</li>
+                        </button>
+                    </ul>
+                </div>
+                <button onclick="addQuestion()" class="btn btn-warning btn-block">Add the
+                    question</button>
+                <div id="invalid-message-show" class="invalid-feedback"></div>
+                <div id="valid-message-show" class="valid-feedback"></div>
+            </div>
+            <div class="jumbotron bg-warning">
+                <button type="button" class="btn btn-outline-warning social-link" style="width: 100%;"
+                    data-toggle="modal" data-target="#warning">
+                    Add form and send me there!
+                </button>
+
+                <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Sometimes useless forms get through and hog our database, and we dont want that to
+                                happen. So we are asking you before you submit this to see if you really care about it.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">I want to edit some
+                                    things</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                    onclick="sendMeToTheForm()">Go for
+                                    it!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') %>
+    <script>
+        const questionTypes = [];
+        for (var i = 0; i < document.getElementById('questionType').options.length; i++) {
+            questionTypes.push(document.getElementById('questionType').options[i].value)
+        };
+        const questions = [];
+        var options = null;
+        changeQuestionType();
+
+        // Specific Question Type Options Handler
+        var checkboxOptions = [];
+        function generateCheckboxList() {
+            var temp = '<button style="padding: 0px;" onclick="addCheckboxOption()"><li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option using the text above</li></button>';
+            checkboxOptions === new Array() ? temp : checkboxOptions.forEach(e => {
+                temp += `\n<li class="list-group-item">${e}</li>`
+            })
+            document.getElementById('checkboxList').innerHTML = temp;
+        }
+        function addCheckboxOption() {
+            if (!document.getElementById('checkboxListInput').value) return;
+            checkboxOptions.push(document.getElementById('checkboxListInput').value);
+            document.getElementById('checkboxListInput').value = null;
+            generateCheckboxList();
+        }
+
+        // Handling Questions
+        function makeQuestionsList() {
+            var temp = "";
+            questions.forEach((question, index) => {
+                temp += `<li class="list-group-item">${index + 1}: ${question.text}<p class="text-muted">Input will be of type <i>${question.type}</i></p></li>`
+            })
+            document.getElementById('questionsList').innerHTML = temp;
+        }
+        function resetInputs() {
+            questionTypes.forEach(type => document.getElementById(type + 'Input').value = '')
+            generateCheckboxList();
+        }
+        function changeQuestionType() {
+            const currentType = document.getElementById('questionType').options[document.getElementById('questionType').selectedIndex].value;
+            questionTypes.map(e => e + "Add").map(e => document.getElementById(e)).forEach(type => type.style.display = "none");
+            document.getElementById(questionTypes.find(e => e === currentType) + "Add").style.display = "block";
+        }
+        function addQuestion() {
+            document.getElementById('invalid-message-show').style.display = "none";
+            const currentType = document.getElementById('questionType').options[document.getElementById('questionType').selectedIndex].value;
+            var id = '';
+            const length = 6;
+            const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            for (var i = length; i > 0; --i) id += chars[Math.floor(Math.random() * chars.length)];
+            // Validation
+            if (document.getElementById("" + currentType + "Input").value == '') {
+                document.getElementById('invalid-message-show').innerHTML = 'The value for the question itself is empty';
+                document.getElementById('invalid-message-show').style.display = "block";
+                return;
+            }
+            // Options
+            if (currentType === "range") {
+                options = {
+                    min: document.getElementById('rangeMinInput').value,
+                    max: document.getElementById('rangeMaxInput').value
+                }
+            }
+            if (currentType === "checkbox") {
+                if (checkboxOptions === new Array()) return;
+                options = checkboxOptions;
+                checkboxOptions = [];
+            }
+            questions.push({ id, type: currentType, text: document.getElementById(currentType + "Input").value, options })
+            options = null;
+            resetInputs();
+            makeQuestionsList();
+            document.getElementById('valid-message-show').innerHTML = 'Success! Check the questions list above to see the changes';
+            document.getElementById('valid-message-show').style.display = "block";
+        }
+        function sendMeToTheForm() {
+            if (!document.getElementById('nameInput').value || !document.getElementById('descInput').value || document.getElementById('authorInput').value || questions == new Array()) return;
+            if (questions == []) return;
+            const data = { name: document.getElementById('nameInput').value, desc: document.getElementById('descInput').value, author: document.getElementById('authorInput').value, questions, submissions: [] }
+            fetch("/form/make/new", {
+                headers: {
+                    "content-type": "application/json; charset=UTF-8"
+                },
+                method: "POST",
+                body: JSON.stringify(data)
+            }).then(res => {
+                console.log("Request complete! response:", res);
+            });
+        }
+    </script>
+</body>
+
+</html>

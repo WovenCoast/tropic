@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<%- include('layouts/head') %>
+
+<body>
+    <%- include('layouts/navbar', {navbar}) %>
+
+    <main>
+        <div class="jumbotron jumbotron-fluid parallax">
+            <h1 class="display-4">Whoops, I don't exist in <%- guild.name %></h1>
+            <p class="lead">Wanna invite me there?</p>
+            <hr class="my-4">
+            <p><a href="<%- invite %>"></a></p>
+        </div>
+        <div class="container">
+            <div class="jumbotron">
+                <p class="lead">Tropic is an amazing bot that suits all your needs with Music, Moderation, Economy,
+                    Utilities and much more!</p>
+            </div>
+            <div class="jumbotron">
+                <p class="lead">Lorem Ipsum Donor Sit Amet....</p>
+            </div>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') %>
+</body>
+
+</html>

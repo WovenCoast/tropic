@@ -12,7 +12,7 @@ module.exports = class extends Command {
 
     async run(msg, [index]) {
         let serverQueue = this.client.queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send("This server doesn't have a queue");
+        if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         const [removed] = serverQueue.songs.splice(index, 1);
         msg.channel.send(`:white_check_mark: Removed **${removed.info.title}** which was requested by *${removed.requestedBy.tag}*`)
     }

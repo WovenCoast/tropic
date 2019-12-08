@@ -1,0 +1,47 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="">
+        <img src="images/tropic-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        Tropic
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/commands"><i class="fas fa-terminal"></i> Commands</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/form"><i class="fas fa-poll"></i> Form</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/donate"><i class="fab fa-paypal"></i> Donate</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/patreon"><i class="fas fa-dollar-sign"></i> Buy Premium</a>
+            </li>
+        </ul>
+        <span class="navbar-text text-white">
+            tropic.dev
+        </span>
+        <a href="/discord"><button type="button" class="btn btn-outline-primary social-link"
+                style="margin-left: 20px;"><i class="fab fa-discord"></i> Join Us!</button></a>
+        <a href="/invite"><button type="button" class="btn btn-outline-primary social-link"
+                style="margin-left: 20px;"><i class="fab fa-android"></i> Invite Me</button></a>
+        <% if (navbar.loggedin) { %>
+        <a href="/dashboard"><button type="button" class="btn btn-outline-primary social-link"
+                style="margin-left: 20px;"><i class="fas fa-chart-line"></i> Dashboard</button></a>
+        <% } else { %>
+        <a href="/login" id="login"><button type="button" class="btn btn-outline-primary social-link"
+                style="margin-left: 20px;"><i class="fas fa-sign-in-alt"></i> Login</button></a>
+        <script>
+            document.getElementById("login").href = `/login?returnTo=${encodeURIComponent(window.location.href)}`;
+        </script>
+        <% } %>
+    </div>
+</nav>

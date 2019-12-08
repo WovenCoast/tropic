@@ -1,0 +1,95 @@
+<head>
+    <title>Tropic</title>
+    <meta name="description" content="Tropic of cancer or tropic of capricorn?">
+    <meta name="theme-color" content="#FF8B00">
+    <link id="favicon" rel="icon" href="images/tropic-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="bootstrap/bootstrap.css" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+
+        :root {
+            --primary: #FF8B00;
+        }
+
+        body {
+            background-image: url("images/tropic-banner.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn-outline-primary:hover {
+            color: white;
+        }
+
+        .jumbotron {
+            background-color: white;
+        }
+
+        .parallax {
+            background-image: url("images/tropic-banner.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .parallax * {
+            color: white;
+            text-shadow: -0.5px 0 var(--primary), 0 0.5px var(--primary), 0.5px 0 var(--primary), 0 -0.5px var(--primary);
+        }
+
+        .social-link {
+            background-color: white;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .jumbotron-fluid {
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media only screen and (max-device-width: 576px) {
+            .jumbotron-fluid {
+                padding: 2rem 1rem;
+            }
+
+            .parallax {
+                background-image: none;
+                background-attachment: scroll;
+                background-color: var(--primary);
+            }
+
+            .parallax * {
+                color: white;
+                text-shadow: inherit;
+            }
+        }
+    </style>
+
+    <noscript>
+        <center>
+            <a>
+                <button>A lot of the functionality of the page comes from JavaScript which you have disabled in your
+                    browser hence the page will not be loaded properly unless JavaScript is turned on. We can reassure
+                    that our page does not have any advertising scripts nor any malicious scripts. The only script
+                    currently in use is by FontAwesome for certain icons that would not be possible without it</button>
+            </a>
+        </center>
+    </noscript>
+</head>

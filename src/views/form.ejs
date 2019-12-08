@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<%- include('layouts/head') %>
+
+<body>
+    <%- include('layouts/navbar', {navbar}) %>
+
+    <main>
+        <div class="jumbotron jumbotron-fluid parallax">
+            <h1 class="display-4"><%- form.name %></h1>
+            <p class="lead"><%- form.desc %></p>
+            <hr class="my-4">
+            <p>Made By <%- form.author %></p>
+        </div>
+        <div class="container">
+            <div class="jumbotron">
+                <form action="/form/submit/<%- form.id %>" method="POST">
+                    <% form.questions.forEach((question, index) => { %>
+                    <div class="form-group">
+                        <label for="<%- question.id %>"><%- index + 1 %>: <%- question.text %></label>
+                        <% if (question.type === "email") { %>
+                        <input type="email" class="form-control" id="<%- question.id %>" placeholder="name@example.com"
+                            name="<%- question.id %>">
+                        <% } else if (question.type === "select") { %>
+                        <select class="form-control" id="<%- question.id %>" name="<%- question.id %>">
+                            <% question.options.forEach((option) => { %>
+                            <option value="<%- option %>"><%- option %></option>
+                            <% }) %>
+                        </select>
+                        <% } else if (question.type === "range") { %>
+                        <input type="range" class="custom-range" id="<%- question.id %>"
+                            min="<%- question.options.min %>" max="<%- question.options.max %>"
+                            value="<%- question.options.min %>">
+                        <% } else if (question.type === "checkbox") { %>
+                        <% question.options.forEach((option, answerIndex) => { %>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<%- option %>"
+                                id="<%- question.id %>-<%- answerIndex %>" name="<%- question.id %>">
+                            <label class="form-check-label" for="<%- question.id %>-<%- answerIndex %>">
+                                <%- option %>
+                            </label>
+                        </div>
+                        <% }); %>
+                        <% } else if (question.type === "radio") { %>
+                        <% question.options.forEach((option, answerIndex) => { %>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" value="<%- option %>"
+                                id="<%- question.id %>-<%- answerIndex %>" name="<%- question.id %>">
+                            <label class="form-check-label" for="<%- question.id %>-<%- answerIndex %>">
+                                <%- option %>
+                            </label>
+                        </div>
+                        <% }); %>
+                        <% } else if (question.type === "text") { %>
+                        <input type="text" class="form-control" id="<%- question.id %>" placeholder=""
+                            name="<%- question.id %>">
+                        <% } else if (question.type === "bigtext") { %>
+                        <textarea class="form-control" id="<%- question.id %>" rows="3"
+                            name="<%- question.id %>"></textarea>
+                        <% } %>
+                    </div>
+                    <% }); %>
+                    <button class="btn btn-outline-primary btn-block" type="submit">Submit the form!</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('layouts/footer') %>
+</body>
+
+</html>

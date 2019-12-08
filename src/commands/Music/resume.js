@@ -12,12 +12,12 @@ module.exports = class extends Command {
 
     async run(msg) {
         let serverQueue = this.client.queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send("This server doesn't have a queue");
-        if (serverQueue.playing === true) return msg.channel.send("Queue is being played");
+        if (!serverQueue) return msg.sendLocale('NO_QUEUE');
+        if (serverQueue.playing === true) return msg.channel.send(":x: Queue is being played");
         const player = client.player.get(msg.guild.id);
-        if (!player) return msg.channel.send("No Lavalink player found");
+        if (!player) return msg.channel.send(":x: No Lavalink player found");
         player.pause(false);
         serverQueue.playing = true;
-        return msg.channel.send("Resumed the music");
+        return msg.channel.send(":white_check_mark: Resumed the music");
     }
 };

@@ -50,12 +50,12 @@ module.exports = class extends Command {
             this.client.queue.set(msg.guild.id, queueConstruct);
 
             try {
-            queueConstruct.player = await this.client.player.join({
-                guild: msg.guild.id,
-                channel: msg.member.voice.channel.id,
-                host: this.client.player.nodes.first().host
-            }, { selfdeaf: true });
-            this.play(msg.guild, queueConstruct.songs[0]);
+                queueConstruct.player = await this.client.player.join({
+                    guild: msg.guild.id,
+                    channel: msg.member.voice.channel.id,
+                    host: this.client.player.nodes.first().host
+                }, { selfdeaf: true });
+                this.play(msg.guild, queueConstruct.songs[0]);
             } catch (error) {
                 console.error(`I could not join the voice channel: ${error}`);
                 this.client.queue.delete(msg.guild.id);
@@ -91,6 +91,7 @@ module.exports = class extends Command {
 
     play(guild, song) {
         let serverQueue = this.client.queue.get(guild.id);
+        serverQueue.player.volume(serverQueue.volume);
         if (!song) {
             serverQueue.textChannel.send(":octagonal_sign: No more queue to play. The player has been stopped")
             this.client.player.leave(guild.id);
