@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../dev.env') });
 const utils = require('./utils');
 const fetch = require('node-fetch');
 // Bot Stuff
@@ -6,7 +7,6 @@ const { Client, util: { isFunction } } = require('klasa');
 const { Collection, MessageEmbed } = require('discord.js');
 const { PlayerManager } = require('discord.js-lavalink');
 const fs = require('fs');
-const path = require('path');
 
 const shardCount = 1;
 const nodes = [
@@ -28,10 +28,6 @@ class FlameyClient extends Client {
         })
 
         this.on('commandError', this.console.error);
-
-        this.on('message', (message) => {
-            this.console.log(message.content)
-        })
 
         // Form Functionality
         this.forms = {
@@ -94,9 +90,7 @@ const client = new FlameyClient({
         fetchAllMembers: false
     },
     prefix: ['t!'],
-    providers: {
-        default: 'json'
-    },
+    providers: { default: 'firestore', firestore: { credentials: require('../firebase-config.json'), databaseURL: 'https://tropic-discord-bot.firebaseio.com' } },
     cmdEditing: true,
     typing: true,
     cmdPrompt: true,
@@ -121,7 +115,10 @@ client.forms.load('./forms.json');
 Client.defaultClientSchema.add('restart', folder => folder
     .add('message', 'messagepromise')
     .add('timestamp', 'bigint', { min: 0 }));
-
+Client.defaultGuildSchema.add('welcomeLeaveChannel', 'channelname', {
+    default: '',
+    configurable: true
+});
 client.login(process.env.DISCORD_TOKEN);
 // Express Stuff
 const express = require('express');

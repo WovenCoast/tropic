@@ -18,10 +18,10 @@ module.exports = class extends Command {
 			.setColor('#34393F');
 		if (command) {
 			embed
-			.setTitle(toTitleCase(command.name))
-			.addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
-			.addField('Usage', command.usage.fullUsage(message))
-			.addField('Extended Help', isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp)
+				.setTitle(toTitleCase(command.name))
+				.addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
+				.addField('Usage', command.usage.fullUsage(message))
+				.addField('Extended Help', isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp)
 			return message.channel.send(embed);
 		}
 		const help = await this.buildHelp(message);

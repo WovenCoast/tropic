@@ -16,14 +16,15 @@ module.exports = class extends Command {
     }
 
     async run(msg, [searchterm]) {
+        console.log(msg.flags);
         if (!msg.member || !msg.member.voice.channel) return msg.reply(":x: You must be in a voice channel for this command.");
 
-        const track = searchterm;
-        const songs = await this.getSongs(`${msg.flags.soundcloud ? 'scsearch' : 'ytsearch'}: ${track}`);
+        const track = searchterm.replace(/--(sc|soundcloud|search|srch)/, '').replace(/\s+/g, ' ').trim();
+        const songs = await this.getSongs(`${(msg.flags.soundcloud || msg.flags.sc) ? 'scsearch' : 'ytsearch'}:${track}`);
         if (!songs[0]) return msg.reply(":shrug: No songs found with that same term, try again!");
 
         var songIndex = 0;
-        if (msg.flags.search) {
+        if (msg.flags.search || msg.flags.srch) {
             const promptEmbed = new MessageEmbed()
                 .setColor('#34393F')
                 .setTitle('Choose a song from below! Send only the number of the song, or else it might not work')
@@ -45,7 +46,7 @@ module.exports = class extends Command {
                 songs: [song],
                 volume: 100,
                 playing: true,
-                loop: false
+                loop: "off"
             };
             this.client.queue.set(msg.guild.id, queueConstruct);
 
@@ -103,9 +104,11 @@ module.exports = class extends Command {
                 .once("end", data => {
                     if (data.reason === "REPLACED") return;
 
-                    const shiffed = serverQueue.songs.shift();
-                    if (serverQueue.loop === true) {
+                    if (serverQueue.loop === "loopall") {
+                        const shiffed = serverQueue.songs.shift();
                         serverQueue.songs.push(shiffed);
+                    } else if (serverQueue.loop === "off") {
+                        serverQueue.songs.shift();
                     };
                     this.play(guild, serverQueue.songs[0])
                 });
