@@ -89,7 +89,7 @@ const client = new FlameyClient({
     clientOptions: {
         fetchAllMembers: false
     },
-    prefix: ['t!'],
+    prefix: [process.env.PREFIX],
     providers: { default: 'firestore', firestore: { credentials: require('../firebase-config.json'), databaseURL: 'https://tropic-discord-bot.firebaseio.com' } },
     cmdEditing: true,
     typing: true,
@@ -115,7 +115,7 @@ client.forms.load('./forms.json');
 Client.defaultClientSchema.add('restart', folder => folder
     .add('message', 'messagepromise')
     .add('timestamp', 'bigint', { min: 0 }));
-Client.defaultGuildSchema.add('welcomeLeaveChannel', 'channelname', {
+Client.defaultGuildSchema.add('welcomeLeaveChannel', 'textchannel', {
     default: '',
     configurable: true
 });
