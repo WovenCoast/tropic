@@ -57,8 +57,9 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
+# Config files
+firebase-config.json
+*.env
 
 # next.js build output
 .next

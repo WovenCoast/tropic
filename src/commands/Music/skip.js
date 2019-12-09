@@ -13,11 +13,17 @@ module.exports = class extends Command {
     async run(msg, [amount]) {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
+        const currentSong = serverQueue.songs[0];
         if (serverQueue.playing === false) serverQueue.playing = true;
         if (amount > 1) {
-            serverQueue.loop ? serverQueue.songs.splice(0, amount - 1).forEach(e => serverQueue.songs.push(e)) : null;
+            if (serverQueue.loop === "loopone") {
+                serverQueue.loop = "loopall";
+                serverQueue.player.stop();
+                serverQueue.loop = "loopone";
+            } else {
+                serverQueue.player.stop();
+            }
         }
-        serverQueue.player.stop();
-        return msg.channel.send(`:white_check_mark: Skipped!`);
+        return msg.channel.send(`:white_check_mark: Skipped the song **${currentSong.title}** requested by *${currentSong.requestedBy.tag}*`);
     }
 };
