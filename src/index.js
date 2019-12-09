@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../dev.env') });
+require('dotenv').config({ path: path.join(__dirname, `../${process.env.OS == 'Windows_NT' ? 'dev' : 'prd'}.env`) });
 const utils = require('./utils');
 const fetch = require('node-fetch');
 // Bot Stuff
