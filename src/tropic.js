@@ -276,7 +276,20 @@ async function getUserInfo(req) {
     return data;
 }
 
-app.listen(process.env.PORT, (err) => {
+// DBL API Stuff
+const http = require('http');
+// const DBL = require('dblapi.js');
+const server = http.createServer(app);
+// const dbl = new DBL(process.env.DBL_TOKEN, { webhookAuth: 'password', webhookServer: server });
+
+// dbl.webhook.on('ready', hook => {
+//     client.console.log(`Webhook running with path ${hook.path}`);
+// });
+// dbl.webhook.on('vote', vote => {
+//     client.console.log(`User with ID ${vote.user} just voted!`);
+// });
+
+server.listen(process.env.PORT, (err) => {
     if (err) return err;
     client.console.log(`Listening on port ${process.env.PORT}`);
 });
