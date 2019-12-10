@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../dev.env') });
+require('dotenv').config({ path: path.join(__dirname, `../${process.platform == 'win32' ? 'dev' : 'prd'}.env`) });
 const utils = require('./utils');
 const fetch = require('node-fetch');
 // Bot Stuff
@@ -163,6 +163,9 @@ app.get('/patreon', asyncRoute(async (req, res) => {
 }));
 app.get('/', asyncRoute(async (req, res) => {
     res.render('index.ejs', { navbar: await buildNavbarData(req) });
+}));
+app.get('/donate', asyncRoute(async (req, res) => {
+    res.render('donate.ejs');
 }));
 app.get('/commands', asyncRoute(async (req, res) => {
     const commands = await buildHelp();
