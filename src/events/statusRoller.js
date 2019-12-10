@@ -18,7 +18,7 @@ module.exports = class extends Event {
     run() {
         setInterval(() => {
             const currentStatus = Math.floor(Math.random() * statuses.length);
-            this.client.user.setActivity({ name: `${this.client.users.size} users : t!help : ${statuses[currentStatus]}`, type: "WATCHING" });
+            this.client.user.setActivity({ name: `${Math.random() > 0.5 ? `${this.client.users.size} users` : `${this.client.guilds.size} guilds`} : ${process.env.PREFIX}help : ${statuses[currentStatus]}`, type: "WATCHING" });
         }, statusDelay * 1000);
     }
 

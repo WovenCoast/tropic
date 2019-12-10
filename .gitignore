@@ -61,5 +61,8 @@ typings/
 firebase-config.json
 *.env
 
+# Small databases
+forms.json
+
 # next.js build output
 .next

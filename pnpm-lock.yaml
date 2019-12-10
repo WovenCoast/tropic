@@ -12,6 +12,7 @@ dependencies:
   fs-nextra: 0.4.5
   heapdump: 0.3.14
   klasa: github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev
+  klasa-member-gateway: github.com/dirigeants/klasa-member-gateway/85ffa8ecb4ac39d82301b99c45e2343e15defb5f_klasa@0.5.0-dev
   memejs: 1.1.2
   mongodb: 3.3.2
   node-fetch: 2.6.0
@@ -2210,6 +2211,19 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/MrJacz/discord.js-lavalink/tar.gz/4632a1b7816edda425820c246d354d06a55dba79'
     version: 2.2.3
+  github.com/dirigeants/klasa-member-gateway/85ffa8ecb4ac39d82301b99c45e2343e15defb5f_klasa@0.5.0-dev:
+    dependencies:
+      klasa: github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev
+    dev: false
+    engines:
+      node: '>=8.6.0'
+    id: github.com/dirigeants/klasa-member-gateway/85ffa8ecb4ac39d82301b99c45e2343e15defb5f
+    name: klasa-member-gateway
+    peerDependencies:
+      klasa: 'github:dirigeants/klasa#master'
+    resolution:
+      tarball: 'https://codeload.github.com/dirigeants/klasa-member-gateway/tar.gz/85ffa8ecb4ac39d82301b99c45e2343e15defb5f'
+    version: 0.0.1-dev
   github.com/dirigeants/klasa/9ae936a59187b62517ae1591efa22c507c98391f_discord.js@12.0.0-dev:
     dependencies:
       discord.js: github.com/discordjs/discord.js/4fc461c2f932709f51efd65a401d943a7efcec12
@@ -2265,6 +2279,7 @@ specifiers:
   fs-nextra: ^0.4.5
   heapdump: ^0.3.14
   klasa: 'github:dirigeants/klasa'
+  klasa-member-gateway: 'github:dirigeants/klasa-member-gateway'
   memejs: ^1.1.2
   mongodb: ^3.3.1
   node-fetch: ^2.6.0

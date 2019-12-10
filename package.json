@@ -30,6 +30,7 @@
     "fs-nextra": "^0.4.5",
     "heapdump": "^0.3.14",
     "klasa": "github:dirigeants/klasa",
+    "klasa-member-gateway": "github:dirigeants/klasa-member-gateway",
     "memejs": "^1.1.2",
     "mongodb": "^3.3.1",
     "node-fetch": "^2.6.0",
