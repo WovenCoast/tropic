@@ -164,6 +164,9 @@ app.get('/patreon', asyncRoute(async (req, res) => {
 app.get('/', asyncRoute(async (req, res) => {
     res.render('index.ejs', { navbar: await buildNavbarData(req) });
 }));
+app.get('/donate', asyncRoute(async (req, res) => {
+    res.render('donate.ejs');
+}));
 app.get('/commands', asyncRoute(async (req, res) => {
     const commands = await buildHelp();
     const prefix = client.options.prefix[0];
