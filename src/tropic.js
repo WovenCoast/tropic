@@ -84,6 +84,23 @@ class FlameyClient extends Client {
         }
     }
 }
+Client.use(require('klasa-member-gateway'));
+
+Client.defaultClientSchema.add('restart', folder => folder
+    .add('message', 'messagepromise')
+    .add('timestamp', 'bigint', { min: 0 }));
+Client.defaultGuildSchema.add('welcomeLeaveChannel', 'textchannel', {
+    default: '',
+    configurable: true
+});
+Client.defaultMemberSchema.add('wallet', 'integer', {
+    default: 0,
+    configurable: false
+});
+Client.defaultUserSchema.add('bank', 'integer', {
+    default: 0,
+    configurable: false
+});
 
 const client = new FlameyClient({
     clientOptions: {
@@ -111,23 +128,7 @@ const client = new FlameyClient({
     },
     readyMessage: (client) => `Logged in as ${client.user.tag}!`
 })
-Client.use(require('klasa-member-gateway'));
 client.forms.load('../forms.json');
-Client.defaultClientSchema.add('restart', folder => folder
-    .add('message', 'messagepromise')
-    .add('timestamp', 'bigint', { min: 0 }));
-Client.defaultGuildSchema.add('welcomeLeaveChannel', 'textchannel', {
-    default: '',
-    configurable: true
-});
-Client.defaultMemberSchema.add('wallet', 'Integer', {
-    default: 0,
-    configurable: false
-});
-Client.defaultUserSchema.add('bank', 'Integer', {
-    default: 0,
-    configurable: false
-});
 client.login(process.env.DISCORD_TOKEN);
 // Express Stuff
 const express = require('express');

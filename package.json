@@ -1,21 +1,21 @@
 {
-  "name": "chainflame",
+  "name": "tropic",
   "version": "0.0.1",
-  "description": "Flame up your server with this hell of a chain!",
+  "description": "",
   "main": "src/index.js",
   "scripts": {
     "test": "node ./src/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WovenCoast/chainflame.git"
+    "url": "git+https://github.com/WovenCoast/tropic.git"
   },
   "author": "FlameXode",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/WovenCoast/chainflame/issues"
+    "url": "https://github.com/WovenCoast/tropic/issues"
   },
-  "homepage": "https://github.com/WovenCoast/chainflame#readme",
+  "homepage": "https://github.com/WovenCoast/tropic#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "btoa": "^1.2.1",
@@ -30,14 +30,13 @@
     "firebase-admin": "^8.8.0",
     "fs-nextra": "^0.4.5",
     "heapdump": "^0.3.14",
-    "klasa": "github:dirigeants/klasa",
-    "klasa-member-gateway": "github:dirigeants/klasa-member-gateway",
+    "klasa": "github:dirigeants/klasa#master",
+    "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#fix-settings",
     "memejs": "^1.1.2",
     "mongodb": "^3.3.1",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-discord": "^0.1.3",
-    "route-async": "^1.0.5",
-    "simplify-commerce": "^1.9.0"
+    "route-async": "^1.0.5"
   }
 }
