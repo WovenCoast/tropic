@@ -12,8 +12,8 @@ dependencies:
   firebase-admin: 8.8.0
   fs-nextra: 0.4.7
   heapdump: 0.3.15
-  klasa: github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435_discord.js@12.0.0-dev
-  klasa-member-gateway: github.com/dirigeants/klasa-member-gateway/62a4bcccc5d59d9e55672e56eec6c4a53ac2c979_klasa@0.5.0-dev
+  klasa: github.com/dirigeants/klasa/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9_discord.js@12.0.0-dev
+  klasa-member-gateway: github.com/dirigeants/klasa-member-gateway/f66b1ab106280db45360b44b14117eafa984c9e4_klasa@0.5.0-dev
   memejs: 1.1.2
   mongodb: 3.4.0
   node-fetch: 2.6.0
@@ -72,7 +72,7 @@ packages:
       duplexify: 3.7.1
       ent: 2.2.0
       extend: 3.0.2
-      google-auth-library: 5.6.1
+      google-auth-library: 5.7.0
       retry-request: 4.1.1
       teeny-request: 5.3.2
     dev: false
@@ -148,7 +148,7 @@ packages:
     optional: true
     resolution:
       integrity: sha512-79Ag+4eQq+KFJcKB85AimepoqTJOGuDLAmJd7JkLc8NM12a87JTCoGi65oi1eZ4H77AV0uUQxSS2Fo/hZL3+kQ==
-  /@grpc/grpc-js/0.6.13:
+  /@grpc/grpc-js/0.6.14:
     dependencies:
       semver: 6.3.0
     dev: false
@@ -156,7 +156,7 @@ packages:
       node: ^8.13.0 || >=10.10.0
     optional: true
     resolution:
-      integrity: sha512-fxkxS+sEtYdfR0ifqgCTqBe4jZ5PvlvgcaYpzwgMqz+b18uUdPmp5eRQN+qbbJg2ZMUcgItA8OWIvAobW3PDng==
+      integrity: sha512-M6q3MtHzk0NQPs1PB+SXSJtkDtK8WXJh+1B1WVJQp5HTURadzj9t1bUb/Fjhq+K57lKsOgL60r8WGmE7vks1eg==
   /@grpc/proto-loader/0.5.3:
     dependencies:
       lodash.camelcase: 4.3.0
@@ -167,12 +167,6 @@ packages:
     optional: true
     resolution:
       integrity: sha512-8qvUtGg77G2ZT2HqdqYoM/OY97gQd/0crSG34xNmZ4ZOsv3aQT/FQV9QfZPazTGna6MIoyUd+u6AxsoZjJ/VMQ==
-  /@klasa/request-handler/0.0.3:
-    dev: false
-    engines:
-      node: '>=10.1.0'
-    resolution:
-      integrity: sha512-Z1O+Aa2kW/I4Uos4EZalByveIuQKRfuRx+JCsgsogDBd95N5Ub47AH+LEd5i+uzjnJ6iDHfodpVlaHojJ4Q+ZQ==
   /@protobufjs/aspromise/1.1.2:
     dev: false
     optional: true
@@ -231,11 +225,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-1w52Nyx4Gq47uuu0EVcsHBxZFJgurQ+rTKS3qMHxR1GY2T8c2AJYd6vZoZ9q1rupaDjU0yT+Jc2XTyXkjeMA+Q==
-  /@types/node/10.17.8:
+  /@types/node/10.17.9:
     dev: false
     optional: true
     resolution:
-      integrity: sha512-FeTtEwXbQa187ABpeEQoO7pq3dHgE85FmAUExx2sKO6U1/MYrLTYv+BIMcgVbQ66WjI4w+Ni+5HJtY+gHgWnPg==
+      integrity: sha512-+6VygF9LbG7Gaqeog2G7u1+RUcmo0q1rI+2ZxdIg2fAUngk5Vz9fOCHXdloNUOHEPd1EuuOpL5O0CdgN9Fx5UQ==
   /@types/node/8.10.59:
     dev: false
     resolution:
@@ -626,7 +620,7 @@ packages:
       end-of-stream: 1.4.4
       inherits: 2.0.4
       readable-stream: 2.3.6
-      stream-shift: 1.0.0
+      stream-shift: 1.0.1
     dev: false
     optional: true
     resolution:
@@ -636,7 +630,7 @@ packages:
       end-of-stream: 1.4.4
       inherits: 2.0.4
       readable-stream: 3.4.0
-      stream-shift: 1.0.0
+      stream-shift: 1.0.1
     dev: false
     optional: true
     resolution:
@@ -924,7 +918,7 @@ packages:
       abort-controller: 3.0.0
       configstore: 5.0.0
       gaxios: 2.2.0
-      google-auth-library: 5.6.1
+      google-auth-library: 5.7.0
       pumpify: 2.0.1
       stream-events: 1.0.5
     dev: false
@@ -948,7 +942,7 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-qjtRgnIVmOfnKUE3NJAQEdk+lKrxfw8t5ke7SXtfMTHcjsBfOfWXCQfdb30zfDoZQ2IRSIiidmjtbHZPZ++Ihw==
-  /google-auth-library/5.6.1:
+  /google-auth-library/5.7.0:
     dependencies:
       arrify: 2.0.1
       base64-js: 1.3.1
@@ -963,15 +957,15 @@ packages:
       node: '>=8.10.0'
     optional: true
     resolution:
-      integrity: sha512-qPbg/KxZao9DxPcvP9QmKFjHJGdqsJb4PTcbPl8QcHtbzukXhSKNAt+ErfizAn80MuzReBPihsrMQhgfGqirdw==
+      integrity: sha512-uclMldsQNf64Qr67O8TINdnqbU/Ixv81WryX+sF9g7uP0igJ98aCR/uU399u1ABLa53LNsyji+bo+bP8/iL9dA==
   /google-gax/1.12.0:
     dependencies:
-      '@grpc/grpc-js': 0.6.13
+      '@grpc/grpc-js': 0.6.14
       '@grpc/proto-loader': 0.5.3
       '@types/long': 4.0.0
       abort-controller: 3.0.0
       duplexify: 3.7.1
-      google-auth-library: 5.6.1
+      google-auth-library: 5.7.0
       is-stream-ended: 0.1.4
       lodash.at: 4.6.0
       lodash.has: 4.5.2
@@ -1616,13 +1610,6 @@ packages:
       ffmpeg-static: ^2.4.0
       node-opus: ^0.3.1
       opusscript: ^0.0.6
-    peerDependenciesMeta:
-      ffmpeg-static:
-        optional: true
-      node-opus:
-        optional: true
-      opusscript:
-        optional: true
     resolution:
       integrity: sha512-W+oxjRyjtd7hw3pefNZuc7YEZ6VICORJvVNfCPs0+7CsJ43CqMjGAYGjPL3hQ82vw03EVra+CiX4zisqOBUUGw==
   /process-nextick-args/2.0.1:
@@ -1643,7 +1630,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.0
-      '@types/node': 10.17.8
+      '@types/node': 10.17.9
       long: 4.0.0
     dev: false
     hasBin: true
@@ -1951,11 +1938,11 @@ packages:
     optional: true
     resolution:
       integrity: sha512-E1GUzBSgvct8Jsb3v2X15pjzN1tYebtbLaMg+eBOUOAxgbLoSbT2NS91ckc5lJD1KfLjId+jXJRgo0qnV5Nerg==
-  /stream-shift/1.0.0:
+  /stream-shift/1.0.1:
     dev: false
     optional: true
     resolution:
-      integrity: sha1-1cdSgl5TZ+eG944Y5EXqIjoVWVI=
+      integrity: sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==
   /streamsearch/0.1.2:
     dev: false
     engines:
@@ -2213,38 +2200,34 @@ packages:
     dev: false
     name: discord.js-lavalink
     resolution:
-      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/MrJacz/discord.js-lavalink/tar.gz/361ee6ea1020aadfe3edd73f7195849e7035b844'
     version: 2.2.3
-  github.com/dirigeants/klasa-member-gateway/62a4bcccc5d59d9e55672e56eec6c4a53ac2c979_klasa@0.5.0-dev:
+  github.com/dirigeants/klasa-member-gateway/f66b1ab106280db45360b44b14117eafa984c9e4_klasa@0.5.0-dev:
     dependencies:
-      klasa: github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435_discord.js@12.0.0-dev
+      klasa: github.com/dirigeants/klasa/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9_discord.js@12.0.0-dev
     dev: false
     engines:
       node: '>=8.6.0'
-    id: github.com/dirigeants/klasa-member-gateway/62a4bcccc5d59d9e55672e56eec6c4a53ac2c979
+    id: github.com/dirigeants/klasa-member-gateway/f66b1ab106280db45360b44b14117eafa984c9e4
     name: klasa-member-gateway
     peerDependencies:
       klasa: 'github:dirigeants/klasa#master'
     resolution:
-      registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/dirigeants/klasa-member-gateway/tar.gz/62a4bcccc5d59d9e55672e56eec6c4a53ac2c979'
+      tarball: 'https://codeload.github.com/dirigeants/klasa-member-gateway/tar.gz/f66b1ab106280db45360b44b14117eafa984c9e4'
     version: 0.0.1-dev
-  github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435_discord.js@12.0.0-dev:
+  github.com/dirigeants/klasa/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9_discord.js@12.0.0-dev:
     dependencies:
-      '@klasa/request-handler': 0.0.3
       discord.js: github.com/discordjs/discord.js/123713305ad5a6aa1e5205a53713494009740aef
       fs-nextra: 0.4.7
     dev: false
     engines:
       node: '>=10.1.0'
-    id: github.com/dirigeants/klasa/aee79a51a6e845b6678e96fdd1a7cc1e27fda435
+    id: github.com/dirigeants/klasa/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9
     name: klasa
     peerDependencies:
       discord.js: 'github:discordjs/discord.js#master'
     resolution:
-      registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/aee79a51a6e845b6678e96fdd1a7cc1e27fda435'
+      tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9'
     version: 0.5.0-dev
   github.com/discordjs/discord.js/123713305ad5a6aa1e5205a53713494009740aef:
     dependencies:
@@ -2285,7 +2268,6 @@ packages:
       zucc:
         optional: true
     resolution:
-      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/123713305ad5a6aa1e5205a53713494009740aef'
     version: 12.0.0-dev
 specifiers:
@@ -2302,8 +2284,8 @@ specifiers:
   firebase-admin: ^8.8.0
   fs-nextra: ^0.4.5
   heapdump: ^0.3.14
-  klasa: 'github:dirigeants/klasa#master'
-  klasa-member-gateway: 'github:dirigeants/klasa-member-gateway#fix-settings'
+  klasa: 'github:dirigeants/klasa'
+  klasa-member-gateway: 'github:dirigeants/klasa-member-gateway'
   memejs: ^1.1.2
   mongodb: ^3.3.1
   node-fetch: ^2.6.0

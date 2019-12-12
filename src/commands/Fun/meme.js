@@ -17,6 +17,7 @@ module.exports = class extends Command {
 
     async run(msg) {
         meme((data) => {
+            if (!data.subreddit) return this.run(msg);
             const embed = new MessageEmbed()
                 .setTitle(data.title[0])
                 .setColor("#36393F")
