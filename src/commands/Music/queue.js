@@ -19,7 +19,7 @@ module.exports = class extends Command {
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         const embed = new MessageEmbed();
         embed
-            .setColor('#34393F')
+            .setColor(this.client.primaryColor)
             .setTitle(`Now Played: **${this.parse(serverQueue.player.state.position)} / ${this.parse(serverQueue.songs[0].info.length)}** of ${serverQueue.songs[0].info.title.includes(serverQueue.songs[0].info.author) ? `"${serverQueue.songs[0].info.title.split(serverQueue.songs[0].info.author).join(`*${serverQueue.songs[0].info.author}*`)}"` : `"${serverQueue.songs[0].info.title}" by *${serverQueue.songs[0].info.author}*`}`)
         const page = pageNum || 1;
         for (let i = (pageLength * (page - 1)) + 1; i < (pageLength * page) + 1; i++) {

@@ -20,7 +20,7 @@ module.exports = class extends Command {
             if (!data.subreddit) return this.run(msg);
             const embed = new MessageEmbed()
                 .setTitle(data.title[0])
-                .setColor("#36393F")
+                .setColor(this.client.primaryColor)
                 .setImage(data.url[0])
                 .setFooter(`${data.author[0]} in r/${data.subreddit[0]}`)
                 .setTimestamp()

@@ -15,6 +15,9 @@ const nodes = [
 class FlameyClient extends Client {
     constructor(options) {
         super(options);
+        // Not so obvious tweaks
+        this.primaryColor = "#36393F";
+        this.currency = (amount) => `${amount} TC`;
         // Music Functionality
         this.queue = new Collection()
         this.player = null;

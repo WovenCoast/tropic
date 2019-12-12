@@ -4,7 +4,7 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            aliases: [],
+            aliases: ['unpause'],
             description: language => language.get('COMMAND_RESUME_DESCRIPTION'),
             usage: ''
         });

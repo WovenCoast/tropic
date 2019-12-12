@@ -15,7 +15,7 @@ module.exports = class extends Command {
 
 	async run(message, [command]) {
 		const embed = new MessageEmbed()
-			.setColor('#34393F');
+			.setColor(this.client.primaryColor);
 		if (command) {
 			embed
 				.setTitle(toTitleCase(command.name))
