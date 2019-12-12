@@ -1,5 +1,7 @@
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, `../${process.platform == 'win32' ? 'dev' : 'prd'}.env`) });
 const client = require('./tropic.js');
+const path = require('path');
+const fetch = require('node-fetch');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
