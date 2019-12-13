@@ -18,7 +18,7 @@ module.exports = class extends Command {
 			.setColor(this.client.primaryColor);
 		if (command) {
 			embed
-				.setTitle(toTitleCase(command.name))
+				.setTitle(this.toTitleCase(command.name))
 				.addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
 				.addField('Usage', command.usage.fullUsage(message))
 				.addField('Extended Help', isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp)
