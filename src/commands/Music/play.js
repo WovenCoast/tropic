@@ -58,7 +58,7 @@ module.exports = class extends Command {
                 }, { selfdeaf: true });
                 this.play(msg.guild, queueConstruct.songs[0]);
             } catch (error) {
-                console.error(`I could not join the voice channel: ${error}`);
+                this.client.console.error(`I could not join the voice channel: ${error}`);
                 this.client.queue.delete(msg.guild.id);
                 this.client.player.leave(msg.guild.id);
                 return msg.channel.send(`:x: I could not join the voice channel: ${error.message}`);
@@ -97,13 +97,11 @@ module.exports = class extends Command {
             serverQueue.textChannel.send(":octagonal_sign: No more queue to play. The player has been stopped")
             this.client.player.leave(guild.id);
             this.client.queue.delete(guild.id);
-            this.client.console.log('player : ' + JSON.stringify(this.client.player, null, 2));
             return;
         } else {
             serverQueue.player.play(song.track)
                 .once("error", console.error)
                 .once("end", data => {
-                    this.client.console.log('end : ' + JSON.stringify(data, null, 2))
                     if (data.reason === "REPLACED") return;
 
                     if (serverQueue.loop === "loopall") {

@@ -57,8 +57,8 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# pnpm lock file
-pnpm-lock.yaml
+# lock files
+.yaml
 
 # Config files
 firebase-config.json
