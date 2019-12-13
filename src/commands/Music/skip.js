@@ -14,6 +14,7 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (!amount) amount = 1;
+        skip(msg, serverQueue, amount);
     }
 
     skip(msg, serverQueue, amount) {
