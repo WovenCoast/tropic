@@ -14,17 +14,26 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (!amount) amount = 1;
-        const currentSong = serverQueue.songs[0];
+    }
+
+    skip(msg, serverQueue, amount) {
+        const skippedSongs = [];
         if (serverQueue.playing === false) serverQueue.playing = true;
         if (amount > 0) {
             if (serverQueue.loop === "loopone") {
                 serverQueue.loop = "loopall";
-                serverQueue.player.stop();
+                for (let i = amount; i > 0; i--) {
+                    skippedSongs.push(serverQueue.songs[0]);
+                    serverQueue.player.stop();
+                }
                 serverQueue.loop = "loopone";
             } else {
-                serverQueue.player.stop();
+                for (let i = amount; i > 0; i--) {
+                    skippedSongs.push(serverQueue.songs[0]);
+                    serverQueue.player.stop();
+                }
             }
-            return msg.channel.send(`:white_check_mark: Skipped the song **${currentSong.info.title}** requested by *${currentSong.requestedBy.tag}*`);
+            return skippedSongs.length == 1 ? msg.channel.send(`:white_check_mark: Skipped the song **${skippedSongs[0].info.title}** requested by *${skippedSongs[0].requestedBy.tag}*`) : msg.channel.send(`:white_check_mark: Skipped ${amount} songs:- ${skippedSongs.map(s => `**${s.info.title}** requested by *${s.requestedBy.tag}*`).join(', ')}`);
         } else {
             return msg.channel.send(`:octagonal_sign: You can't skip ${amount} songs!`);
         }
