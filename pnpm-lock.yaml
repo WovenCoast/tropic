@@ -1610,6 +1610,13 @@ packages:
       ffmpeg-static: ^2.4.0
       node-opus: ^0.3.1
       opusscript: ^0.0.6
+    peerDependenciesMeta:
+      ffmpeg-static:
+        optional: true
+      node-opus:
+        optional: true
+      opusscript:
+        optional: true
     resolution:
       integrity: sha512-W+oxjRyjtd7hw3pefNZuc7YEZ6VICORJvVNfCPs0+7CsJ43CqMjGAYGjPL3hQ82vw03EVra+CiX4zisqOBUUGw==
   /process-nextick-args/2.0.1:
@@ -2200,6 +2207,7 @@ packages:
     dev: false
     name: discord.js-lavalink
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/MrJacz/discord.js-lavalink/tar.gz/361ee6ea1020aadfe3edd73f7195849e7035b844'
     version: 2.2.3
   github.com/dirigeants/klasa-member-gateway/f66b1ab106280db45360b44b14117eafa984c9e4_klasa@0.5.0-dev:
@@ -2213,6 +2221,7 @@ packages:
     peerDependencies:
       klasa: 'github:dirigeants/klasa#master'
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/dirigeants/klasa-member-gateway/tar.gz/f66b1ab106280db45360b44b14117eafa984c9e4'
     version: 0.0.1-dev
   github.com/dirigeants/klasa/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9_discord.js@12.0.0-dev:
@@ -2227,6 +2236,7 @@ packages:
     peerDependencies:
       discord.js: 'github:discordjs/discord.js#master'
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/dirigeants/klasa/tar.gz/0e9174cab0df7d28f3a7b8ca78b6344fef2611c9'
     version: 0.5.0-dev
   github.com/discordjs/discord.js/123713305ad5a6aa1e5205a53713494009740aef:
@@ -2268,6 +2278,7 @@ packages:
       zucc:
         optional: true
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/123713305ad5a6aa1e5205a53713494009740aef'
     version: 12.0.0-dev
 specifiers:

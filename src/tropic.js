@@ -90,6 +90,14 @@ Client.use(require('klasa-member-gateway'));
 Client.defaultClientSchema.add('restart', folder => folder
     .add('message', 'messagepromise')
     .add('timestamp', 'bigint', { min: 0 }));
+Client.defaultGuildSchema.add('shop', folder => folder
+    .add('itemname', 'string')
+    .add('rewardRole', 'role')
+    .add('price', 'number'), {
+    array: true,
+    default: [],
+    configurable: false
+});
 Client.defaultGuildSchema.add('welcomeLeaveChannel', 'textchannel', {
     default: '',
     configurable: true
@@ -113,6 +121,8 @@ const client = new FlameyClient({
         fetchAllMembers: false
     },
     prefix: [process.env.PREFIX],
+    slowmode: 2000,
+    preserveSettings: false,
     providers: { default: 'firestore', firestore: { credentials: require('../firebase-config.json'), databaseURL: 'https://tropic-discord-bot.firebaseio.com' } },
     cmdEditing: true,
     typing: true,

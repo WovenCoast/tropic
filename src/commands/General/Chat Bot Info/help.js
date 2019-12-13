@@ -78,5 +78,7 @@ module.exports = class extends Command {
 
 		return help;
 	}
-
+	toTitleCase(s) {
+		return s.toLowerCase().split('-').map(e => e[0].toUpperCase() + e.slice(1)).join(' ');
+	}
 };

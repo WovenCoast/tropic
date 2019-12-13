@@ -4,7 +4,6 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            cooldown: 10,
             description: 'Transfers an amount of money from your bank account to your wallet',
             usage: '<amount:amt>'
         });

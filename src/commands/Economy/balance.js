@@ -5,7 +5,7 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            cooldown: 10,
+            aliases: ['bal'],
             description: 'Checks the balance available on the user',
             usage: ''
         });
@@ -15,8 +15,8 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
             .setColor(this.client.primaryColor)
             .setAuthor(`Balance of ${msg.author.tag}`, msg.author.avatarURL())
-            .addField('Wallet', this.client.currency(msg.member.settings.wallet))
-            .addField('Bank', this.client.currency(msg.author.settings.bank))
+            .addField(':classical_building: Bank', this.client.currency(msg.author.settings.bank))
+            .addField(':moneybag: Wallet', this.client.currency(msg.member.settings.wallet))
         msg.channel.send(embed);
     }
 };

@@ -14,7 +14,7 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (serverQueue.playing === true) return msg.channel.send(":x: Queue is being played");
-        const player = client.player.get(msg.guild.id);
+        const player = this.client.player.get(msg.guild.id);
         if (!player) return msg.channel.send(":x: No Lavalink player found");
         player.pause(false);
         serverQueue.playing = true;

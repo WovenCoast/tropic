@@ -16,17 +16,16 @@ module.exports = class extends Command {
     }
 
     async run(msg, [searchterm]) {
-        console.log(msg.flags);
         if (!msg.member || !msg.member.voice.channel) return msg.reply(":x: You must be in a voice channel for this command.");
 
         const track = searchterm.replace(/--(sc|soundcloud|search|srch)/, '').replace(/\s+/g, ' ').trim();
-        const songs = await this.getSongs(`${(msg.flags.soundcloud || msg.flags.sc) ? 'scsearch' : 'ytsearch'}:${track}`);
+        const songs = await this.getSongs(`${(msg.flagArgs.soundcloud || msg.flagArgs.sc) ? 'scsearch' : 'ytsearch'}:${track}`);
         if (!songs[0]) return msg.reply(":shrug: No songs found with that same term, try again!");
 
         var songIndex = 0;
-        if (msg.flags.search || msg.flags.srch) {
+        if (msg.flagArgs.search || msg.flagArgs.srch) {
             const promptEmbed = new MessageEmbed()
-                .setColor('#34393F')
+                .setColor(this.client.primaryColor)
                 .setTitle('Choose a song from below! Send only the number of the song, or else it might not work')
                 .setFooter('Send the message "abort", "cancel" or "stop" to cancel the search');
             songs.slice(0, 5).forEach((song, index) => song ? promptEmbed.addField(`${index + 1}: ${song.info.title.includes(song.info.author) ? song.info.title.split(song.info.author).join(`*${song.info.author}*`) : `(*${song.info.author}*) - ${song.info.title}`}`, `Length: **${this.parse(song.info.length)}**\nURL: ${song.info.uri}`) : null)
@@ -38,6 +37,7 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         const song = songs[songIndex];
         song.requestedBy = msg.author;
+        this.client.console.log(song);
         if (!serverQueue) {
             const queueConstruct = {
                 textChannel: msg.channel,
@@ -97,22 +97,24 @@ module.exports = class extends Command {
             serverQueue.textChannel.send(":octagonal_sign: No more queue to play. The player has been stopped")
             this.client.player.leave(guild.id);
             this.client.queue.delete(guild.id);
+            this.client.console.log('player : ' + JSON.stringify(this.client.player, null, 2));
             return;
         } else {
             serverQueue.player.play(song.track)
                 .once("error", console.error)
                 .once("end", data => {
+                    this.client.console.log('end : ' + JSON.stringify(data, null, 2))
                     if (data.reason === "REPLACED") return;
 
                     if (serverQueue.loop === "loopall") {
-                        const shiffed = serverQueue.songs.shift();
-                        serverQueue.songs.push(shiffed);
+                        serverQueue.songs.push(serverQueue.songs.shift());
                     } else if (serverQueue.loop === "off") {
                         serverQueue.songs.shift();
                     };
                     this.play(guild, serverQueue.songs[0])
                 });
             serverQueue.player.volume(serverQueue.volume);
+            this.client.console.log('player : ' + JSON.stringify(this.client.player, null, 2));
             return serverQueue.textChannel.send(`:arrow_forward: Now playing: **${song.info.title}** by **${song.info.author}**`);
         };
     };
