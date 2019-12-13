@@ -112,7 +112,6 @@ module.exports = class extends Command {
                     this.play(guild, serverQueue.songs[0])
                 });
             serverQueue.player.volume(serverQueue.volume);
-            this.client.console.log('player : ' + JSON.stringify(this.client.player, null, 2));
             return serverQueue.textChannel.send(`:arrow_forward: Now playing: **${song.info.title}** by **${song.info.author}**`);
         };
     };
