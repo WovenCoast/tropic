@@ -15,7 +15,6 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (!amount) amount = 1;
-        if (amount > 5) return
         if (!msg.guild.settings.isPremium && amount > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to skip more than ${this.normalUserLimit} songs!`)
         this.skip(msg, serverQueue, amount);
     }
