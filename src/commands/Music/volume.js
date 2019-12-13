@@ -19,7 +19,7 @@ module.exports = class extends Command {
             return msg.channel.send(`:loudspeaker: The current volume is **${serverQueue.volume}%**.`);
         } else {
             if (serverQueue.volume == volume) return msg.channel.send(`:shrug: The volume is already at **${serverQueue.volume}%**...`)
-            if (msg.guild.settings.isPremium && volume > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to set the volume higher than ${this.normalUserLimit}%!`)
+            if (!msg.guild.settings.isPremium && volume > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to set the volume higher than ${this.normalUserLimit}%!`)
             serverQueue.volume = volume;
             serverQueue.player.volume(serverQueue.volume);
             return msg.channel.send(`:white_check_mark: Successfully set the volume to **${volume}%**.`);
