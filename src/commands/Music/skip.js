@@ -24,6 +24,6 @@ module.exports = class extends Command {
                 serverQueue.player.stop();
             }
         }
-        return msg.channel.send(`:white_check_mark: Skipped the song **${currentSong.title}** requested by *${currentSong.requestedBy.tag}*`);
+        return msg.channel.send(`:white_check_mark: Skipped the song **${currentSong.info.title}** requested by *${currentSong.requestedBy.tag}*`);
     }
 };
