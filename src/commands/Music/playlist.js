@@ -22,6 +22,9 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         console.log(serverQueue.songs);
+        for (var i = 0; i < serverQueue.songs.length; i++) {
+            serverQueue.songs[i].requestedBy = serverQueue.songs[i].requestedBy.id;
+        }
         if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs.map(s => s.info.url) });
         else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
     }
