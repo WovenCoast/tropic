@@ -22,7 +22,7 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         serverQueue.songs = serverQueue.songs.map(s => {
-            s.requestedBy = s.requestedBy.id;
+            s.requestedBy = s.requestedBy.id || '';
             return s;
         })
         console.log(serverQueue.songs);
