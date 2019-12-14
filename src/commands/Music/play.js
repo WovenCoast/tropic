@@ -63,6 +63,9 @@ module.exports = class extends Command {
                 return msg.channel.send(`:x: I could not join the voice channel: ${error.message}`);
             };
         } else {
+            if (serverQueue.voiceChannel.members.size > 1) {
+
+            }
             serverQueue.songs.push(song);
             if (serverQueue.playing) {
                 return msg.channel.send(`:white_check_mark: Successfully added **${song.info.title}** to queue!`);

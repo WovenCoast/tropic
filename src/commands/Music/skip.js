@@ -32,7 +32,7 @@ module.exports = class extends Command {
                 serverQueue.loop = "loopone";
             } else {
                 for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[0]);
+                    skippedSongs.push(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
             }
