@@ -23,23 +23,23 @@ module.exports = class extends Command {
             const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });
             if (!goAhead) return msg.channel.send(`:x: Majority didn't really want to skip ${amount}`);
         }
-        this.skip(msg, serverQueue, amount);
+        await this.skip(msg, serverQueue, amount);
     }
 
-    skip(msg, serverQueue, amount) {
+    async skip(msg, serverQueue, amount) {
         const skippedSongs = [];
         if (serverQueue.playing === false) serverQueue.playing = true;
         if (amount > 0) {
             if (serverQueue.loop === "loopone") {
                 serverQueue.loop = "loopall";
                 for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[i]);
+                    await skippedSongs.push(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
                 serverQueue.loop = "loopone";
             } else {
                 for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[i]);
+                    await skippedSongs.push(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
             }
