@@ -33,11 +33,11 @@ module.exports = class extends Command {
         if (serverQueue.playing === false) serverQueue.playing = true;
         if (serverQueue.loop === "loopone") {
             serverQueue.loop = "loopall";
-            skippedSong = serverQueue.songs[i];
+            skippedSong = serverQueue.songs[0];
             serverQueue.player.stop();
             serverQueue.loop = "loopone";
         } else {
-            skippedSong = serverQueue.songs[i];
+            skippedSong = serverQueue.songs[0];
             serverQueue.player.stop();
         }
         return msg.channel.send(`:white_check_mark: Skipped the song **${skippedSong.info.title}** requested by *${skippedSong.requestedBy.tag}*`);
