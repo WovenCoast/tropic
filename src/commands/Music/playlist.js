@@ -85,6 +85,13 @@ module.exports = class extends Command {
     }
 
 
+    parse(length) {
+        const milliseconds = parseInt(length / 1000);
+        const seconds = parseInt(milliseconds % 60);
+        const minutes = parseInt((milliseconds / 60) % 60);
+        const hours = parseInt((milliseconds / 60) / 60);
+        return `${hours ? hours + ':' : ''}${minutes + ':' + (seconds < 10 ? '0' + seconds : seconds)}`;
+    }
     toTitleCase(s) {
         return s.toLowerCase().split('-').map(e => e[0].toUpperCase() + e.slice(1)).join(' ');
     }
