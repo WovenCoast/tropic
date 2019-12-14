@@ -21,9 +21,10 @@ module.exports = class extends Command {
     async save(msg, [name]) {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
-        for (var i = 0; i < serverQueue.songs.length; i++) {
-            serverQueue.songs[i].requestedBy = serverQueue.songs[i].requestedBy.id;
-        }
+        serverQueue.songs = serverQueue.songs.map(s => {
+            s.requestedBy = s.requestedBy.id;
+            return s;
+        })
         console.log(serverQueue.songs);
         if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs.map(s => s.info.url) });
         else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
