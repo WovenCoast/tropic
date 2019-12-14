@@ -23,31 +23,23 @@ module.exports = class extends Command {
             const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });
             if (!goAhead) return msg.channel.send(`:x: Majority didn't really want to skip ${amount} song${amount === 1 ? '' : 's'}`);
         }
-        await this.skip(msg, serverQueue, amount);
+        for (let i = 0; i < amount; i++) {
+            await this.skip(msg, serverQueue);
+        }
     }
 
-    async skip(msg, serverQueue, amount) {
-        const skippedSongs = [];
+    async skip(msg, serverQueue) {
+        let skippedSong;
         if (serverQueue.playing === false) serverQueue.playing = true;
-        if (amount > 0) {
-            if (serverQueue.loop === "loopone") {
-                serverQueue.loop = "loopall";
-                for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[i]);
-                    console.log(serverQueue.songs[i]);
-                    serverQueue.player.stop();
-                }
-                serverQueue.loop = "loopone";
-            } else {
-                for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[i]);
-                    console.log(serverQueue.songs[i]);
-                    serverQueue.player.stop();
-                }
-            }
-            return skippedSongs.length == 1 ? msg.channel.send(`:white_check_mark: Skipped the song **${skippedSongs[0].info.title}** requested by *${skippedSongs[0].requestedBy.tag}*`) : msg.channel.send(`:white_check_mark: Skipped ${amount} songs:- ${skippedSongs.map(s => `**${s.info.title}** requested by *${s.requestedBy.tag}*`).join(', ')}`);
+        if (serverQueue.loop === "loopone") {
+            serverQueue.loop = "loopall";
+            skippedSong = serverQueue.songs[i];
+            serverQueue.player.stop();
+            serverQueue.loop = "loopone";
         } else {
-            return msg.channel.send(`:octagonal_sign: You can't skip ${amount} songs!`);
+            skippedSong = serverQueue.songs[i];
+            serverQueue.player.stop();
         }
+        return msg.channel.send(`:white_check_mark: Skipped the song **${skippedSong.info.title}** requested by *${skippedSong.requestedBy.tag}*`);
     }
 };
