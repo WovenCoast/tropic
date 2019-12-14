@@ -19,15 +19,16 @@ module.exports = class extends Command {
         return msg.channel.send(JSON.stringify(data));
     }
     async save(msg, [name]) {
+        var tempSongs;
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
-        serverQueue.songs = serverQueue.songs.map(s => {
+        tempSongs = serverQueue.songs.map(s => {
             s.requestedBy = s.requestedBy.id || '';
             return s;
         })
-        console.log(serverQueue.songs);
-        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
-        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
+        console.log(tempSongs);
+        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: tempSongs });
+        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: tempSongs });
 
     }
 };
