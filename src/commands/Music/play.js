@@ -66,7 +66,7 @@ module.exports = class extends Command {
                 return msg.channel.send(`:x: I could not join the voice channel: ${error.message}`);
             };
         } else {
-            if (serverQueue.voiceChannel.members.size > 1 && msg.member.permissions.has(this.client.djPerms)) {
+            if (serverQueue.voiceChannel.members.size > 2 && msg.member.permissions.has(this.client.djPerms)) {
                 const message = await msg.channel.send(`Can I make sure that the majority of you want to play the song **${song.info.title}** by **${song.info.author}**?`)
                 await message.react(this.client.yesEmoji);
                 const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });

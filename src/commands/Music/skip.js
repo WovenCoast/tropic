@@ -17,11 +17,11 @@ module.exports = class extends Command {
         if (!amount) amount = 1;
         if (amount > serverQueue.songs.length) amount = amount % serverQueue.songs.length;
         if (!msg.guild.settings.isPremium && amount > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to skip more than ${this.normalUserLimit} songs!`)
-        if (serverQueue.voiceChannel.members.size > 1 && msg.member.permissions.has(this.client.djPerms)) {
-            const message = await msg.channel.send(`Can I make sure that the majority of you want to skip ${amount} songs?`);
+        if (serverQueue.voiceChannel.members.size > 2 && msg.member.permissions.has(this.client.djPerms)) {
+            const message = await msg.channel.send(`Can I make sure that the majority of you want to skip ${amount} song${amount === 1 ? '' : 's'}?`);
             await message.react(this.client.yesEmoji);
             const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });
-            if (!goAhead) return msg.channel.send(`:x: Majority didn't really want to skip ${amount}`);
+            if (!goAhead) return msg.channel.send(`:x: Majority didn't really want to skip ${amount} song${amount === 1 ? '' : 's'}`);
         }
         await this.skip(msg, serverQueue, amount);
     }

@@ -20,7 +20,7 @@ module.exports = class extends Command {
         } else {
             if (serverQueue.volume == volume) return msg.channel.send(`:shrug: The volume is already at **${serverQueue.volume}%**...`)
             if (!msg.guild.settings.isPremium && volume > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to set the volume higher than ${this.normalUserLimit}%!`)
-            if (serverQueue.voiceChannel.members.size > 1 && msg.member.permissions.has(this.client.djPerms)) {
+            if (serverQueue.voiceChannel.members.size > 2 && msg.member.permissions.has(this.client.djPerms)) {
                 const message = await msg.channel.send(`Can I make sure that the majority of you want to set the volume from ${serverQueue.volume} to ${volume}?`);
                 await message.react(this.client.yesEmoji);
                 const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });
