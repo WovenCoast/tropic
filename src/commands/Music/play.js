@@ -102,6 +102,7 @@ module.exports = class extends Command {
             this.client.queue.delete(guild.id);
             return;
         } else {
+            serverQueue.playing = true;
             serverQueue.player.play(song.track)
                 .once("error", console.error)
                 .once("end", data => {
