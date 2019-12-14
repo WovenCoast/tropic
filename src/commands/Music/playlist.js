@@ -83,4 +83,9 @@ module.exports = class extends Command {
             return msg.channel.send(`:octagonal_sign: Something went terribly wrong:- \`\`\`${error.message}\`\`\``);
         }
     }
+
+
+    toTitleCase(s) {
+        return s.toLowerCase().split('-').map(e => e[0].toUpperCase() + e.slice(1)).join(' ');
+    }
 };
