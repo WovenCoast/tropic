@@ -9,12 +9,10 @@ module.exports = class extends Monitor {
     }
 
     async run(msg) {
-        if (msg.channel.id === '653558671749677056' && msg.guild.id === '630072317904683018') {
+        if (`${msg.guild.id}-${msg.channel.id}` === '630072317904683018-653558671749677056') {
             await exec(`git pull`, { timeout: 60000 })
                 .catch(error => ({ stdout: null, stderr: error }))
             await exec(`pnpm i`, { timeout: 1000000 })
-                .catch(error => ({ stdout: null, stderr: error }));
-            await exec(`pm2 restart all`)
                 .catch(error => ({ stdout: null, stderr: error }));
         }
     }
