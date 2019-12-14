@@ -25,7 +25,7 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
             .setTitle(`${this.toTitleCase(name)}`)
         tempSongs.forEach((song, index) => {
-            embed.addField(`${index + 1 + pageLength * (page - 1)}: ${song.info.title.includes(song.info.author) ? song.info.title.split(song.info.author).join(`*${song.info.author}*`) : `(*${song.info.author}*) - ${song.info.title}`}`, `\nLength: **${this.parse(song.info.length)}**\nURL: ${song.info.uri}`)
+            embed.addField(`${index + 1}: ${song.info.title.includes(song.info.author) ? song.info.title.split(song.info.author).join(`*${song.info.author}*`) : `(*${song.info.author}*) - ${song.info.title}`}`, `\nLength: **${this.parse(song.info.length)}**\nURL: ${song.info.uri}`)
         });
         return msg.channel.send(embed);
     }
