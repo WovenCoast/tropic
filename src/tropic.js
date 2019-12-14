@@ -129,7 +129,7 @@ const client = new FlameyClient({
         fetchAllMembers: false
     },
     prefix: [process.env.PREFIX],
-    slowmode: 2000,
+    slowmode: 2,
     preserveSettings: false,
     providers: { default: 'firestore', firestore: { credentials: require('../firebase-config.json'), databaseURL: 'https://tropic-discord-bot.firebaseio.com' } },
     cmdEditing: true,
@@ -137,7 +137,7 @@ const client = new FlameyClient({
     cmdPrompt: true,
     pieceDefaults: {
         commands: {
-            cooldown: 1000,
+            cooldown: 1,
             promptLimit: 3,
             runIn: ['text']
         },
