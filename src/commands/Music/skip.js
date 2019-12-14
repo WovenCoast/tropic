@@ -16,6 +16,7 @@ module.exports = class extends Command {
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
         if (!amount) amount = 1;
         if (!msg.guild.settings.isPremium && amount > this.normalUserLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to skip more than ${this.normalUserLimit} songs!`)
+        if (amount > serverQueue.songs.length) amount = amount % serverQueue.songs.length;
         this.skip(msg, serverQueue, amount);
     }
 
@@ -26,7 +27,7 @@ module.exports = class extends Command {
             if (serverQueue.loop === "loopone") {
                 serverQueue.loop = "loopall";
                 for (let i = amount; i > 0; i--) {
-                    skippedSongs.push(serverQueue.songs[0]);
+                    skippedSongs.push(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
                 serverQueue.loop = "loopone";
