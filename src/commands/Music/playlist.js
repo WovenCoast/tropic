@@ -16,7 +16,7 @@ module.exports = class extends Command {
     async load(msg, [name]) {
         const data = await this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
         if (!data) return msg.channel.send(':x: The playlist you were searching for is not a saved playlist.')
-        const serverQueue = this.client.queue.get(msg.guild.id);
+        var serverQueue = this.client.queue.get(msg.guild.id);
         const tempSongs = data.songs.map(s => {
             s.requestedBy = this.client.users.find(u => u.id === s.requestedBy);
             return s;
