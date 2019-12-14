@@ -14,7 +14,6 @@ module.exports = class extends Command {
         if (!msg.member || !msg.member.voice.channel) return msg.reply(":x: You must be in a voice channel for this command.");
 
         let serverQueue = this.client.queue.get(msg.guild.id);
-        song.requestedBy = msg.author;
         if (!(serverQueue && serverQueue.voiceChannel === msg.member.voice.channel)) {
             const queueConstruct = {
                 textChannel: msg.channel,
