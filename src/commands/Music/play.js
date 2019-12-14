@@ -64,7 +64,11 @@ module.exports = class extends Command {
             };
         } else {
             serverQueue.songs.push(song);
-            return msg.channel.send(`:white_check_mark: Successfully added **${song.info.title}** to queue!`);
+            if (serverQueue.playing) {
+                return msg.channel.send(`:white_check_mark: Successfully added **${song.info.title}** to queue!`);
+            } else {
+                return this.play(msg.guild, serverQueue.songs[0]);
+            }
         };
     }
 
