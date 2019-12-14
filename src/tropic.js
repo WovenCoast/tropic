@@ -15,9 +15,15 @@ const nodes = [
 class FlameyClient extends Client {
     constructor(options) {
         super(options);
-        // Not so obvious tweaks
+        // Important Tweaks
         this.primaryColor = "#36393F";
-        this.currency = (amount) => `${amount} TC`;
+        // Economy Functionality
+        this.economy = {
+            currency(amount) {
+                return `${amount} TC`;
+            }
+        }
+
         // Music Functionality
         this.queue = new Collection()
         this.player = null;
@@ -27,18 +33,23 @@ class FlameyClient extends Client {
                 shards: shardCount
             })
         })
+        // Music Playlist Functionality
+        // this.playlist = {
+        //     load(userID, name) {
+        //         return this.providers.default.get('playlists', `${userID}-${name}`);
+        //     },
+        //     save(userID, name, songs) {
+        //         this.providers.default.delete('playlists', `${userID}-${name}`);
+        //         return this.providers.default.create('playlists', `${userID}-${name}`, songs);
+        //     }
+        // };
 
         this.on('commandError', this.console.error);
 
         // Form Functionality
         this.forms = {
-            cache: {},
-            load: (directory) => {
-                this.dbdir = path.join(__dirname, directory);
-                fs.readFile(this.dbdir, (err, data) => this.cache = JSON.parse(data))
-            },
             getForm: (id) => {
-                return this.cache[id];
+                return this.providers.default.get('forms', id);
             },
             createForm: (data) => {
                 var id = '';
@@ -47,13 +58,11 @@ class FlameyClient extends Client {
                     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
                     for (var i = length; i > 0; --i) id += chars[Math.floor(Math.random() * chars.length)];
                 } else id = data.vanityID;
-                data.id = id;
-                this.cache[id] = data;
-                fs.writeFile(this.dbdir, JSON.stringify(this.cache, null, 2), (err) => { if (err) throw err; })
+                this.providers.default.create('forms', id, data);
                 return id;
             },
             submitForm: (id, data) => {
-                const form = this.cache[id];
+                const form = this.providers.default.get('forms', id);
                 const embed = new MessageEmbed()
                     .setAuthor(`${form.name} : Submission`, client.user.avatarURL())
                     .setTitle(`${data.user.name} just filled out your form!`)
@@ -79,8 +88,7 @@ class FlameyClient extends Client {
                         });
                 }
                 data.user = data.user.id;
-                this.cache[id].submissions.push(data);
-                fs.writeFile(this.dbdir, JSON.stringify(this.cache, null, 2), (err) => { if (err) throw err; })
+                this.providers.default.db.collection('forms').doc(id).collection('submissions').doc(data.user).set(this.providers.default.parseUpdateInput(data));
             }
         }
     }
@@ -146,7 +154,6 @@ const client = new FlameyClient({
     },
     readyMessage: (client) => `Logged in as ${client.user.tag}!`
 })
-client.forms.load('../forms.json');
 client.login(process.env.DISCORD_TOKEN);
 // Express stuff
 const express = require('express');

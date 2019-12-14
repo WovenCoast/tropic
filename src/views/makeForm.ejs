@@ -47,6 +47,7 @@
                         <option value="email">Email</option>
                         <option value="range">Range</option>
                         <option value="checkbox">Checkbox</option>
+                        <option value="select">Selection</option>
                     </select>
                 </div>
                 <div class="form-group" id="textAdd">
@@ -91,6 +92,21 @@
                     <input type="text" class="form-control" id="checkboxListInput" placeholder="Hello World!">
                     <ul class="list-group" id="checkboxList">
                         <button style="padding: 0px;" onclick="addCheckboxOption()">
+                            <li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option
+                                using the text above</li>
+                        </button>
+                    </ul>
+                </div>
+                <div class="form-group" id="selectAdd">
+                    <label for="selectInput">Question</label>
+                    <input type="text" class="form-control" aria-describedby="selectHelp" id="selectInput"
+                        placeholder="What is the meaning of life?">
+                    <small id="selectHelp" class="form-text text-muted">You don't need to add the question
+                        numbers</small>
+                    <label for="selectListInput">Add to the list of selections</label>
+                    <input type="text" class="form-control" id="selectListInput" placeholder="Hello World!">
+                    <ul class="list-group" id="selectList">
+                        <button style="padding: 0px;" onclick="addSelectOption()">
                             <li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option
                                 using the text above</li>
                         </button>
@@ -146,6 +162,7 @@
 
         // Specific Question Type Options Handler
         var checkboxOptions = [];
+        var selectOptions = [];
         function generateCheckboxList() {
             var temp = '<button style="padding: 0px;" onclick="addCheckboxOption()"><li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option using the text above</li></button>';
             checkboxOptions === new Array() ? temp : checkboxOptions.forEach(e => {
@@ -157,7 +174,22 @@
             if (!document.getElementById('checkboxListInput').value) return;
             checkboxOptions.push(document.getElementById('checkboxListInput').value);
             document.getElementById('checkboxListInput').value = null;
+            document.getElementById('checkboxListInput').focus();
             generateCheckboxList();
+        }
+        function generateSelectList() {
+            var temp = '<button style="padding: 0px;" onclick="addSelectOption()"><li class="btn btn-warning" style="width: 100%; height: 100%;">Add another option using the text above</li></button>';
+            selectOptions === new Array() ? temp : selectOptions.forEach(e => {
+                temp += `\n<li class="list-group-item">${e}</li>`
+            })
+            document.getElementById('selectList').innerHTML = temp;
+        }
+        function addSelectOption() {
+            if (!document.getElementById('selectListInput').value) return;
+            selectOptions.push(document.getElementById('selectListInput').value);
+            document.getElementById('selectListInput').value = null;
+            document.getElementById('selectListInput').focus();
+            generateSelectList();
         }
 
         // Handling Questions
@@ -201,6 +233,13 @@
                 if (checkboxOptions === new Array()) return;
                 options = checkboxOptions;
                 checkboxOptions = [];
+                generateCheckboxList();
+            }
+            if (currentType === "select") {
+                if (selectOptions === new Array()) return;
+                options = selectOptions;
+                selectOptions = [];
+                generateSelectList();
             }
             questions.push({ id, type: currentType, text: document.getElementById(currentType + "Input").value, options })
             options = null;

@@ -15,8 +15,8 @@ module.exports = class extends Command {
         const embed = new MessageEmbed()
             .setColor(this.client.primaryColor)
             .setAuthor(`Balance of ${msg.author.tag}`, msg.author.avatarURL())
-            .addField(':classical_building: Bank', this.client.currency(msg.author.settings.bank))
-            .addField(':moneybag: Wallet', this.client.currency(msg.member.settings.wallet))
+            .addField(':classical_building: Bank', this.client.economy.currency(msg.author.settings.bank))
+            .addField(':moneybag: Wallet', this.client.economy.currency(msg.member.settings.wallet))
         msg.channel.send(embed);
     }
 };

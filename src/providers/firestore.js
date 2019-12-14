@@ -29,7 +29,6 @@ module.exports = class extends Provider {
             credential: firebase.credential.cert(this.client.options.providers.firestore.credentials),
             databaseURL: this.client.options.providers.firestore.databaseURL
         });
-
         this.db = firebase.firestore();
     }
 

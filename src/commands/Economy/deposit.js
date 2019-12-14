@@ -15,6 +15,6 @@ module.exports = class extends Command {
         if (amount === 0) return msg.channel.send(':octagonal_sign: You cannot deposit nothing into your bank! Money doesn\'t come from trees')
         await msg.author.settings.update('bank', msg.author.settings.bank + amount);
         await msg.member.settings.update('wallet', msg.member.settings.wallet - amount);
-        msg.channel.send(`:white_check_mark: Successfully deposited ${this.client.currency(amount)} to your bank account!`);
+        msg.channel.send(`:white_check_mark: Successfully deposited ${this.client.economy.currency(amount)} to your bank account!`);
     }
 };
