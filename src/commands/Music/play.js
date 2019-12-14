@@ -13,10 +13,14 @@ module.exports = class extends Command {
             description: language => language.get('COMMAND_PLAY_DESCRIPTION'),
             usage: '<searchterm:string>'
         });
+        this.normalUserQueueLimit = 10;
     }
 
     async run(msg, [searchterm]) {
         if (!msg.member || !msg.member.voice.channel) return msg.reply(":x: You must be in a voice channel for this command.");
+
+        let serverQueue = this.client.queue.get(msg.guild.id);
+        if (serverQueue && serverQueue.songs && !msg.guild.settings.isPremium && serverQueue.songs.length + 1 > this.normalUserQueueLimit) return msg.channel.send(`:x: This guild needs Tropic Premium to play more than ${this.normalUserQueueLimit} songs!`);
 
         const track = searchterm.replace(/--(sc|soundcloud|search|srch)/, '').replace(/\s+/g, ' ').trim();
         const songs = await this.getSongs(`${(msg.flagArgs.soundcloud || msg.flagArgs.sc) ? 'scsearch' : 'ytsearch'}:${track}`);
@@ -34,7 +38,6 @@ module.exports = class extends Command {
             songIndex = parseInt(promptMessage.content) - 1;
         }
 
-        let serverQueue = this.client.queue.get(msg.guild.id);
         const song = songs[songIndex];
         song.requestedBy = msg.author;
         if (!serverQueue) {
@@ -63,9 +66,13 @@ module.exports = class extends Command {
                 return msg.channel.send(`:x: I could not join the voice channel: ${error.message}`);
             };
         } else {
-            if (serverQueue.voiceChannel.members.size > 1) {
-
+            if (serverQueue.voiceChannel.members.size > 1 && msg.member.permissions.has(this.client.djPerms)) {
+                const message = await msg.channel.send(`Can I make sure that the majority of you want to play the song **${song.info.title}** by **${song.info.author}**?`)
+                await message.react(this.client.yesEmoji);
+                const goAhead = await message.promptReact((reaction, user) => reaction.emoji.name === this.client.yesEmoji && serverQueue.voiceChannel.members.map(m => m.user.id).includes(user.id), { minReactUsers: Math.floor(serverQueue.voiceChannel.members.size / 2) });
+                if (!goAhead) return msg.channel.send(`:x: Majority didn't really want to play the song`)
             }
+            if (serverQueue.voiceChannel !== msg.member.voice.channel) return msg.channel.send(`:octagonal_sign: You aren't joined in the voice channel where I'm joined!`);
             serverQueue.songs.push(song);
             if (serverQueue.playing) {
                 return msg.channel.send(`:white_check_mark: Successfully added **${song.info.title}** to queue!`);
@@ -122,4 +129,7 @@ module.exports = class extends Command {
             return serverQueue.textChannel.send(`:arrow_forward: Now playing: **${song.info.title}** by **${song.info.author}**`);
         };
     };
+    toTitleCase(s) {
+        return s.toLowerCase().split('-').map(e => e[0].toUpperCase() + e.slice(1)).join(' ');
+    }
 };

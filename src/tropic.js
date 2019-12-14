@@ -3,7 +3,7 @@ require('dotenv').config({ path: path.join(__dirname, `../${process.platform == 
 const fetch = require('node-fetch');
 // Bot Stuff
 const { Client, util: { isFunction } } = require('klasa');
-const { Collection, MessageEmbed } = require('discord.js');
+const { Collection, MessageEmbed, Permissions } = require('discord.js');
 const { PlayerManager } = require('discord.js-lavalink');
 const fs = require('fs');
 
@@ -17,6 +17,8 @@ class FlameyClient extends Client {
         super(options);
         // Important Tweaks
         this.primaryColor = "#36393F";
+        this.yesEmoji = '631368412739796994';
+        this.djPerms = Permissions.FLAGS.PRIORITY_SPEAKER;
         // Economy Functionality
         this.economy = {
             currency(amount) {

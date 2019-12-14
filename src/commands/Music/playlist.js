@@ -1,10 +1,11 @@
 const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            usage: '<load|save|delete> <name:string>',
+            usage: '<show|load|save|delete> <name:string>',
             usageDelim: ' '
         });
     }
@@ -13,11 +14,26 @@ module.exports = class extends Command {
         return await this[type](msg, params);
     }
 
+    async show(msg, [name]) {
+        name = name.toLowerCase();
+        const data = await this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
+        if (!data) return msg.channel.send(':x: The playlist you were searching for is not a saved playlist.')
+        const tempSongs = data.songs.map(s => {
+            s.requestedBy = this.client.users.find(u => u.id === s.requestedBy);
+            return s;
+        });
+        const embed = new MessageEmbed()
+            .setTitle(`${this.toTitleCase(name)}`)
+        tempSongs.forEach((song, index) => {
+            embed.addField(`${index + 1 + pageLength * (page - 1)}: ${song.info.title.includes(song.info.author) ? song.info.title.split(song.info.author).join(`*${song.info.author}*`) : `(*${song.info.author}*) - ${song.info.title}`}`, `\nLength: **${this.parse(song.info.length)}**\nURL: ${song.info.uri}`)
+        });
+        return msg.channel.send(embed);
+    }
+
     async load(msg, [name]) {
         name = name.toLowerCase();
         const data = await this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
         if (!data) return msg.channel.send(':x: The playlist you were searching for is not a saved playlist.')
-        console.log(data);
         var serverQueue = this.client.queue.get(msg.guild.id);
         const tempSongs = data.songs.map(s => {
             s.requestedBy = this.client.users.find(u => u.id === s.requestedBy);
