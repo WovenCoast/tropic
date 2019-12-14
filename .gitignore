@@ -62,6 +62,7 @@ typings/
 
 # Config files
 firebase-config.json
+application.yml
 *.env
 
 # Small databases

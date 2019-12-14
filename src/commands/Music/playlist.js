@@ -4,7 +4,7 @@ module.exports = class extends Command {
 
     constructor(...args) {
         super(...args, {
-            usage: '<load|save> <name:string>',
+            usage: '<load|save|delete> <name:string>',
             usageDelim: ' '
         });
     }
@@ -14,6 +14,7 @@ module.exports = class extends Command {
     }
 
     async load(msg, [name]) {
+        name = name.toLowerCase();
         const data = await this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
         if (!data) return msg.channel.send(':x: The playlist you were searching for is not a saved playlist.')
         console.log(data);
@@ -53,6 +54,17 @@ module.exports = class extends Command {
             return msg.channel.send(`:white_check_mark: Successfully saved the current queue as the playlist *${name}*, to retrieve the playlist use the command <@${this.client.user.id}>\`playlist load ${name}\`!`);
         } catch (error) {
             return msg.channel.send(`:x: An error occurred during the saving process:-\n\`\`\`${error.message}\`\`\``);
+        }
+    }
+
+    async delete(msg, [name]) {
+        name = name.toLowerCase();
+        if (!(await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`))) return msg.channel.send(`:x: You can't delete what you didnt save!`);
+        try {
+            await this.client.providers.default.delete('playlists', `${msg.author.id}-${name}`);
+            return msg.channel.send(`:white_check_mark: Successfully deleted the playlist named \`${name}\`!`);
+        } catch (error) {
+            return msg.channel.send(`:octagonal_sign: Something went terribly wrong:- \`\`\`${error.message}\`\`\``);
         }
     }
 };
