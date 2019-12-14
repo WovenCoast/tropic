@@ -22,12 +22,14 @@ module.exports = class extends Provider {
 
     constructor(...args) {
         super(...args);
-        this.db = null; firebase.initializeApp({
+        this.db = null;
+    }
+    async init() {
+        await firebase.initializeApp({
             credential: firebase.credential.cert(this.client.options.providers.firestore.credentials),
             databaseURL: this.client.options.providers.firestore.databaseURL
-        }).then((data) => {
-            this.db = firebase.firestore();
         });
+        this.db = firebase.firestore();
     }
 
     hasTable(table) {
