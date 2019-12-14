@@ -1,5 +1,5 @@
 const { Command } = require('klasa');
-const loopStates = ['loopone', 'loopall', 'off'];
+const loopStates = ['one', 'all', 'off'];
 
 module.exports = class extends Command {
 

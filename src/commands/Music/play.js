@@ -37,7 +37,6 @@ module.exports = class extends Command {
         let serverQueue = this.client.queue.get(msg.guild.id);
         const song = songs[songIndex];
         song.requestedBy = msg.author;
-        this.client.console.log(song);
         if (!serverQueue) {
             const queueConstruct = {
                 textChannel: msg.channel,
@@ -104,7 +103,7 @@ module.exports = class extends Command {
                 .once("end", data => {
                     if (data.reason === "REPLACED") return;
 
-                    if (serverQueue.loop === "loopall") {
+                    if (serverQueue.loop === "all") {
                         serverQueue.songs.push(serverQueue.songs.shift());
                     } else if (serverQueue.loop === "off") {
                         serverQueue.songs.shift();
