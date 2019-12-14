@@ -21,7 +21,8 @@ module.exports = class extends Command {
     async save(msg, [name]) {
         let serverQueue = this.client.queue.get(msg.guild.id);
         if (!serverQueue) return msg.sendLocale('NO_QUEUE');
-        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, serverQueue.songs);
-        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, serverQueue.songs);
+        console.log(serverQueue.songs);
+        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, JSON.stringify(serverQueue.songs));
+        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, JSON.stringify(serverQueue.songs));
     }
 };
