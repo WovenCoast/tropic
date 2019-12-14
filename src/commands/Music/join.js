@@ -32,7 +32,7 @@ module.exports = class extends Command {
                     channel: msg.member.voice.channel.id,
                     host: this.client.player.nodes.first().host
                 }, { selfdeaf: true });
-                return msg.channel.send(':white_check_mark: Successfully joined the voice channel! Use the command `play` to play a song!');
+                return msg.channel.send(':white_check_mark: Successfully joined the voice channel!');
             } catch (error) {
                 this.client.console.error(`I could not join the voice channel: ${error}`);
                 this.client.queue.delete(msg.guild.id);

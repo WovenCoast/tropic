@@ -29,10 +29,11 @@ module.exports = class extends Command {
         if (msg.flagArgs.override) {
             serverQueue.songs = tempSongs;
             serverQueue.loop = "off";
-            serverQueue.player.stop();
+            serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : serverQueue.player.stop();
             return msg.channel.send(`:white_check_mark: Successfully overrided the current queue with the loaded playlist! Loop has been reset to \`off\`.`);
         } else {
             serverQueue.songs = serverQueue.songs === [] ? tempSongs : [...serverQueue.songs, ...tempSongs];
+            serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : null;
             return msg.channel.send(`:white_check_mark: Successfully appended the current queue and the loaded playlist! Use the command \`queue\` to see the changes.`);
         }
     }
