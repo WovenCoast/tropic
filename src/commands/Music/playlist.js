@@ -14,11 +14,14 @@ module.exports = class extends Command {
     }
 
     async load(msg, [name]) {
-        const data = this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
+        const data = await this.client.providers.default.get('playlists', `${msg.author.id}-${name}`);
         console.log(data);
         return msg.channel.send(JSON.stringify(data));
     }
     async save(msg, [name]) {
-
+        let serverQueue = this.client.queue.get(msg.guild.id);
+        if (!serverQueue) return msg.sendLocale('NO_QUEUE');
+        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, serverQueue.songs);
+        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, serverQueue.songs);
     }
 };
