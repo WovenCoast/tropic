@@ -26,7 +26,8 @@ module.exports = class extends Command {
             return s;
         })
         console.log(serverQueue.songs);
-        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs.map(s => s.info.uri) });
-        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs.map(s => s.info.uri) });
+        if (await this.client.providers.default.has('playlists', `${msg.author.id}-${name}`)) await this.client.providers.default.update('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
+        else await this.client.providers.default.create('playlists', `${msg.author.id}-${name}`, { songs: serverQueue.songs });
+
     }
 };
