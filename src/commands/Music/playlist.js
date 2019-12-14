@@ -23,7 +23,7 @@ module.exports = class extends Command {
         });
         if (!serverQueue) {
             this.client.commands.get('join').run(msg);
-            if (this.client.queue.has(msg.guild.id)) serverQueue = msg.guild.id;
+            if (this.client.queue.has(msg.guild.id)) serverQueue = this.client.queue.get(msg.guild.id);
             else return;
         }
         if (msg.flagArgs.override) {
