@@ -23,18 +23,18 @@ module.exports = class extends Command {
             return s;
         });
         if (!serverQueue) {
-            this.client.commands.get('join').run(msg);
+            await this.client.commands.get('join').run(msg);
             if (this.client.queue.has(msg.guild.id)) serverQueue = this.client.queue.get(msg.guild.id);
             else return;
         }
         if (msg.flagArgs.override) {
             serverQueue.songs = tempSongs;
             serverQueue.loop = "off";
-            serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : serverQueue.player.stop();
+            await serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : serverQueue.player.stop();
             return msg.channel.send(`:white_check_mark: Successfully overrided the current queue with the loaded playlist! Loop has been reset to \`off\`.`);
         } else {
-            serverQueue.songs = serverQueue.songs === [] ? tempSongs : [...serverQueue.songs, ...tempSongs];
-            serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : null;
+            serverQueue.songs = serverQueue.songs[0] === undefined ? tempSongs : [...serverQueue.songs, ...tempSongs];
+            await serverQueue.playing === false ? this.client.commands.get('play').play(msg.guild, serverQueue.songs[0]) : null;
             return msg.channel.send(`:white_check_mark: Successfully appended the current queue and the loaded playlist! Use the command \`queue\` to see the changes.`);
         }
     }
