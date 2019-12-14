@@ -33,13 +33,15 @@ module.exports = class extends Command {
             if (serverQueue.loop === "loopone") {
                 serverQueue.loop = "loopall";
                 for (let i = amount; i > 0; i--) {
-                    await skippedSongs.push(serverQueue.songs[i]);
+                    skippedSongs.push(serverQueue.songs[i]);
+                    console.log(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
                 serverQueue.loop = "loopone";
             } else {
                 for (let i = amount; i > 0; i--) {
-                    await skippedSongs.push(serverQueue.songs[i]);
+                    skippedSongs.push(serverQueue.songs[i]);
+                    console.log(serverQueue.songs[i]);
                     serverQueue.player.stop();
                 }
             }
