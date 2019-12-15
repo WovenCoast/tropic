@@ -256,7 +256,7 @@ const btoa = require('btoa')
 var scopes = ['identify', 'guilds', 'guilds.join'];
 
 app.get('/login', asyncRoute(function async(req, res) {
-    const returnTo = req.query.returnTo || (process.env.DEBUG ? "http://localhost:5000/" : "http://tropic.dev/");
+    const returnTo = req.query.returnTo || (process.env.DEBUG ? "http://localhost:5000/" : "https://tropic.dev/");
     req.session.returnTo = returnTo;
     res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&scope=${scopes.join('%20')}&response_type=code&redirect_uri=${encodeURIComponent(process.env.DISCORD_AUTH_CALLBACK)}`);
 }));
@@ -299,7 +299,6 @@ async function getUserInfo(req) {
     });
     data = await fetchDiscordUserInfo.json();
     data.guilds = await fetchUserGuildsInfo.json();
-    console.log(data);
     return data;
 }
 // 404 and listen
