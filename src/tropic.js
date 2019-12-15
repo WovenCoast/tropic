@@ -16,9 +16,10 @@ class FlameyClient extends Client {
     constructor(options) {
         super(options);
         // Important Tweaks
-        this.primaryColor = "#36393F";
+        this.primaryColor = "#FF8B00";
         this.yesEmoji = '631368412739796994';
         this.djPerms = Permissions.FLAGS.PRIORITY_SPEAKER;
+
         // Economy Functionality
         this.economy = {
             currency(amount) {
@@ -35,16 +36,6 @@ class FlameyClient extends Client {
                 shards: shardCount
             })
         })
-        // Music Playlist Functionality
-        // this.playlist = {
-        //     load(userID, name) {
-        //         return this.providers.default.get('playlists', `${userID}-${name}`);
-        //     },
-        //     save(userID, name, songs) {
-        //         this.providers.default.delete('playlists', `${userID}-${name}`);
-        //         return this.providers.default.create('playlists', `${userID}-${name}`, songs);
-        //     }
-        // };
 
         this.on('commandError', this.console.error);
 
@@ -225,6 +216,20 @@ app.get('/dashboard/:guildid', requireAuth, asyncRoute(async (req, res) => {
         res.render('noDashboard.ejs', { navbar: await buildNavbarData(req), user, guild: selectedGuild, invite: client.invite });
     }
 }))
+// Shop Stuff
+// app.get('/shop/:guildID', requireAuth, asyncRoute(async (req, res) => {
+//     const { guildID } = req.params;
+//     const user = await getUserInfo(req);
+//     if (!user.guilds.map(g => g.id).includes(guildID)) return res.render('404', { url: req.originalUrl });
+//     res.render('shop.ejs', { navbar: await buildNavbarData(req), user });
+// }));
+// app.get('/shop/:guildID/edit', requireAuth, asyncRoute(async (req, res) => {
+//     const { guildID } = req.params;
+//     const user = await getUserInfo(req);
+//     if (!(user.guilds.map(g => g.id).includes(guildID) && user.guilds.find(g => g.id === guildID).owner_id === user.id)) return res.render('404', { url: req.originalUrl });
+//     console.log('Passed The test!');
+//     res.render('makeShop.ejs', { navbar: await buildNavbarData(req), user, shop: client.providers.has('shops', guildID) ? client.providers.get('shops', guildID) : null });
+// }))
 // Form Stuff
 app.get('/form', requireAuth, asyncRoute(async (req, res) => {
     res.render('makeForm.ejs', { navbar: await buildNavbarData(req), user: await getUserInfo(req) });
@@ -294,30 +299,12 @@ async function getUserInfo(req) {
     });
     data = await fetchDiscordUserInfo.json();
     data.guilds = await fetchUserGuildsInfo.json();
-    if (data.guilds.find(g => g.id === "616614413348110336") === undefined) {
-        await fetch(`http://discordapp.com/api/guilds/616614413348110336/members/${data.id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
-    }
+    console.log(data);
     return data;
 }
-
-// DBL API Stuff
-const http = require('http');
-// const DBL = require('dblapi.js');
-const server = http.createServer(app);
-// const dbl = new DBL(process.env.DBL_TOKEN, { webhookAuth: 'password', webhookServer: server });
-
-// dbl.webhook.on('ready', hook => {
-//     client.console.log(`Webhook running with path ${hook.path}`);
-// });
-// dbl.webhook.on('vote', vote => {
-//     client.console.log(`User with ID ${vote.user} just voted!`);
-// });
-
-server.listen(process.env.PORT, (err) => {
-    if (err) return err;
-    client.console.log(`Listening on port ${process.env.PORT}`);
-});
+// 404 and listen
+app.use((req, res, next) => {
+    res.status(404);
+    res.render('404', { url: req.originalUrl });
+})
+app.listen(process.env.PORT);

@@ -16,7 +16,6 @@ module.exports = class extends Monitor {
 
         if (Math.random() < (this.percent / 100)) {
             const amount = Math.floor(Math.random() * 9) + 1;
-            console.log(`${msg.author.tag} just got ${this.client.economy.currency(amount)}!`);
             msg.member.settings.update('wallet', msg.member.settings.wallet + amount);
             timeout.add(`${msg.guild.id}-${msg.author.id}`);
             setTimeout(() => timeout.delete(`${msg.guild.id}-${msg.author.id}`), this.rateLimit * 1000);
