@@ -202,8 +202,7 @@ app.get('/commands', asyncRoute(async (req, res) => {
 }));
 // Dashboard stuff
 app.get('/dashboard', requireAuth, asyncRoute(async (req, res) => {
-    const mutualGuilds = (await getUserInfo(req)).guilds.filter(g => client.guilds.get(g.id)).map(g => client.guilds.get(g.id));
-    res.render('dashboard.ejs', { navbar: await buildNavbarData(req), user: await getUserInfo(req), mutualGuilds, guild: null });
+    res.render('dashboardList.ejs', { navbar: await buildNavbarData(req), user: await getUserInfo(req), guild: null });
 }))
 app.get('/dashboard/:guildid', requireAuth, asyncRoute(async (req, res) => {
     const params = req.params;
@@ -292,13 +291,9 @@ async function getUserInfo(req) {
             Authorization: `Bearer ${token}`,
         }
     });
-    const fetchUserGuildsInfo = await fetch('http://discordapp.com/api/users/@me/guilds', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        }
-    });
     data = await fetchDiscordUserInfo.json();
-    data.guilds = await fetchUserGuildsInfo.json();
+    data.guilds = client.guilds.filter(g => g.members.has(data.id)).map(g => g);
+    console.log(data);
     return data;
 }
 // 404 and listen

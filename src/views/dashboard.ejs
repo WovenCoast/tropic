@@ -6,23 +6,20 @@
     <%- include('layouts/navbar', {navbar}) %>
 
     <main>
-        <% if (guild) { %>
         <div class="jumbotron jumbotron-fluid parallax">
             <div class="d-flex justify-content-start">
-                <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === "ANIMATED_ICON") ? "gif" : "png" %>?size=128"
+                <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === 'ANIMATED_ICON') ? 'gif' : 'png' %>?size=128"
                     alt="" style="border:#ff8b00 solid 5px; background: #2f3136; border-radius: 50%;">
                 <h1 class="display-4"><%- guild.name %></h1>
             </div>
             <hr>
             <p class="lead">Powered by Tropic</p>
         </div>
-        <% } %>
         <div class="jumbotron jumbotron-fluid parallax">
-            <% if (guild) { %>
-            <% const defaultConfig = defaultConf %>
             <% console.log(`${defaultConfig[0]}`) %>
             <div class="jumbotron" style="background-color: rgba(255, 139, 0, 0.4);">
                 <% Object.keys(config).filter((c, i) => defaultConfig[i].configurable).forEach((conf, index) => { %>
+                <% console.log(conf) %>
                 <div class="d-flex justify-content-around">
                     <label><%- conf[0].toUpperCase() + conf.slice(1).replace(/([A-Z][^A-Z])/g, " $1") %> <span
                             class="badge badge-primary badge-pill" style="border: white solid 1px;">
@@ -36,76 +33,6 @@
                 <% } %>
                 <% }); %>
             </div>
-            <% } else { %>
-            <div class="jumbotron parallax">
-                <h1 class="display-4">Mutual Guilds</h1>
-                <p class="lead">Guilds with me in it</p>
-                <ul class="list-group">
-                    <% mutualGuilds.sort((a, b) => a.name.toLowerCase().charCodeAt(0) < b.name.toLowerCase().charCodeAt(0) ? -1 : (a.name.toLowerCase().charCodeAt(0) > b.name.toLowerCase().charCodeAt(0) ? 1 : 0)).forEach(guild => { %>
-                    <li class="list-group-item jumbotron parallax"
-                        style="text-decoration: none; background-image: url('https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png?size=2048');">
-                        <a href="/dashboard/<%- guild.id %>" class="list-group-item"
-                            style="background-color: rgba(255, 139, 0, 0.4);">
-                            <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === "ANIMATED_ICON") ? "gif" : "png" %>?size=128"
-                                alt="" style="border:#ff8b00 solid 5px; background: #2f3136; border-radius: 50%;">
-                            <label
-                                style="margin-left: 15px; margin-right: auto; font-size: 25px;"><%- guild.name %></label>
-
-                            <% if (guild.features.some(f => f == "PARTNERED")) { %>
-                            <span class="badge badge-primary badge-pill" style="border: white solid 1px;"><i
-                                    class="fas fa-handshake"></i></span>
-                            <% } %>
-                        </a>
-                    </li>
-                    <% }); %>
-                </ul>
-            </div>
-
-            <div class="jumbotron parallax">
-                <h1 class="display-4">All the guilds</h1>
-                <p class="lead">Every single guild you are in</p>
-                <ul class="list-group">
-                    <% user.guilds.sort((a, b) => a.name.toLowerCase().charCodeAt(0) < b.name.toLowerCase().charCodeAt(0) ? -1 : (a.name.toLowerCase().charCodeAt(0) > b.name.toLowerCase().charCodeAt(0) ? 1 : 0)).forEach(guild => { %>
-                    <li class="list-group-item jumbotron parallax"
-                        style="text-decoration: none; background-image: url('https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png?size=2048');">
-                        <a href="/dashboard/<%- guild.id %>" class="list-group-item"
-                            style="background-color: rgba(255, 139, 0, 0.4);">
-                            <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === "ANIMATED_ICON") ? "gif" : "png" %>?size=128"
-                                alt="" style="border:#ff8b00 solid 5px; background: #2f3136; border-radius: 50%;">
-                            <label
-                                style="margin-left: 15px; margin-right: auto; font-size: 25px;"><%- guild.name %></label>
-
-                            <% if (guild.features.some(f => f == "PARTNERED")) { %>
-                            <span class="badge badge-primary badge-pill" style="border: white solid 1px;"><i
-                                    class="fas fa-handshake"></i></span>
-                            <% } %>
-                        </a>
-                    </li>
-                    <% }); %>
-                </ul>
-            </div>
-            <div class="jumbotron parallax">
-                <ul class="list-group">
-                    <% user.guilds.sort((a, b) => a.name.toLowerCase().charCodeAt(0) < b.name.toLowerCase().charCodeAt(0) ? -1 : (a.name.toLowerCase().charCodeAt(0) > b.name.toLowerCase().charCodeAt(0) ? 1 : 0)).forEach(guild => { %>
-                    <li class="list-group-item jumbotron parallax"
-                        style="text-decoration: none; background-image: url('https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.png?size=2048');">
-                        <a href="/dashboard/<%- guild.id %>" class="list-group-item"
-                            style="background-color: rgba(255, 139, 0, 0.4);">
-                            <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === "ANIMATED_ICON") ? "gif" : "png" %>?size=128"
-                                alt="" style="border:#ff8b00 solid 5px; background: #2f3136; border-radius: 50%;">
-                            <label
-                                style="margin-left: 15px; margin-right: auto; font-size: 25px;"><%- guild.name %></label>
-
-                            <% if (guild.features.some(f => f == "PARTNERED")) { %>
-                            <span class="badge badge-primary badge-pill" style="border: white solid 1px;"><i
-                                    class="fas fa-handshake"></i></span>
-                            <% } %>
-                        </a>
-                    </li>
-                    <% }); %>
-                </ul>
-            </div>
-            <% } %>
         </div>
     </main>
 
