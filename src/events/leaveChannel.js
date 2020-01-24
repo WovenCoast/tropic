@@ -19,7 +19,7 @@ module.exports = class extends Event {
     }
 
     run(member) {
-        member.guild.channels.find(c => c.name == member.guild.settings.welcomeLeaveChannel).send(new MessageEmbed().setAuthor(member.user.tag, member.user.avatarURL()).setColor('RED').setTitle(randomMessages[Math.floor(Math.random() * randomMessages.length)].replace("{guildname}", member.guild.name).replace("{tag}", member.user.tag)).setDescription(description.replace("{guildname}", member.guild.name).replace("{tag}", member.user.tag).replace("{membercount}", member.guild.memberCount)));
+        member.guild.channels.find(c => c.id == member.guild.settings.welcomeLeaveChannel).send(new MessageEmbed().setAuthor(member.user.tag, member.user.avatarURL()).setColor('RED').setTitle(randomMessages[Math.floor(Math.random() * randomMessages.length)].replace("{guildname}", member.guild.name).replace("{tag}", member.user.tag)).setDescription(description.replace("{guildname}", member.guild.name).replace("{tag}", member.user.tag).replace("{membercount}", member.guild.memberCount)));
     }
 
 };
