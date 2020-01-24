@@ -26,7 +26,7 @@ module.exports = class extends Monitor {
 	}
 
 	parseCommand(message) {
-		const result = this.customPrefix(message) || this.mentionPrefix(message) || this.naturalPrefix(message) || this.prefixLess(message);
+		const result = this.customPrefix(message) || this.mentionPrefix(message) || this.naturalPrefix(message) || this.prefixLess(message) || this.defaultPrefix(message);
 		return result ? {
 			commandText: message.content.slice(result.length).trim().split(' ')[0].toLowerCase(),
 			prefix: result.regex,
@@ -56,6 +56,10 @@ module.exports = class extends Monitor {
 
 	prefixLess({ channel: { type } }) {
 		return this.client.options.noPrefixDM && type === 'dm' ? { length: 0, regex: null } : null;
+	}
+
+	defaultPrefix({ content }) {
+		return typeof this.client.options.prefix === Array ? (this.client.options.prefix.some(p => content.includes(p)) ? { length: this.client.options.prefix.find(p => content.includes(p)).length, regex: new RegExp(this.client.options.prefix.find(p => content.includes(p))) } : null) : null;
 	}
 
 	generateNewPrefix(prefix) {

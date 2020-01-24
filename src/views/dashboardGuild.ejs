@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<%- include('layouts/head') %>
+
+<body>
+    <%- include('layouts/navbar', {navbar}) %>
+
+    <main>
+        <div class="jumbotron jumbotron-fluid parallax">
+            <div class="d-flex justify-content-start">
+                <img src="https://cdn.discordapp.com/icons/<%- guild.id %>/<%- guild.icon %>.<%- guild.features.some(f => f === 'ANIMATED_ICON') ? 'gif' : 'png' %>?size=128"
+                    alt="" style="border:#ff8b00 solid 5px; background: #2f3136; border-radius: 50%;">
+                <h1 class="display-4"><%- guild.name %></h1>
+            </div>
+            <hr>
+            <p class="lead">Powered by Tropic</p>
+        </div>
+        <div id="hiddenGuild" style='display: none;'><%- guild %></div>
+        <div class="jumbotron jumbotron-fluid parallax"></div>
+    </main>
+
+    <%- include('layouts/footer') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
+        var socket = io();
+        const guild = JSON.parse(document.getElementById('hiddenGuild').innerHTML);
+        socket.emit('identifier', guild.id);
+    </script>
+</body>
+
+</html>

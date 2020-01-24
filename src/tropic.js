@@ -151,16 +151,18 @@ client.login(process.env.DISCORD_TOKEN);
 // Express stuff
 const express = require('express');
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const asyncRoute = require('route-async');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, './public/')))
-app.use('/form/', express.static(path.join(__dirname, './public/')))
-app.use('/dashboard/', express.static(path.join(__dirname, './public/')))
-app.use(session({ secret: 'nyan the keyboard cat', resave: false, saveUninitialized: false, cookie: {} }))
+app.use(express.static(path.join(__dirname, './public/')));
+app.use('/form/', express.static(path.join(__dirname, './public/')));
+app.use('/dashboard/', express.static(path.join(__dirname, './public/')));
+app.use(session({ secret: Math.random().toString().substr(3, 5), resave: false, saveUninitialized: false, cookie: {} }))
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, './views/'));
 
@@ -207,14 +209,18 @@ app.get('/dashboard', requireAuth, asyncRoute(async (req, res) => {
 app.get('/dashboard/:guildid', requireAuth, asyncRoute(async (req, res) => {
     const params = req.params;
     const user = await getUserInfo(req);
-    const selectedGuild = user.guilds.find(g => g.id == params.guildid);
+    if (!client.guilds.find(g => g.id == params.guildid).members.find(m => m.user.id == user.id)) return;
+    const selectedGuild = client.guilds.find(g => g.id == params.guildid);
+    console.log(selectedGuild);
     if (client.guilds.find(f => f.id === selectedGuild.id)) {
-        console.log(Object.values(Client.defaultGuildSchema.toJSON()).map(c => c));
-        res.render('dashboard.ejs', { navbar: await buildNavbarData(req), user, guild: selectedGuild, config: JSON.stringify(client.guilds.find(f => f.id === selectedGuild.id).settings.toJSON()), defaultConfig: JSON.stringify(Object.values(Client.defaultGuildSchema.toJSON()).map(c => c)) });
+        res.render('dashboardGuild.ejs', { navbar: await buildNavbarData(req), user, guild: selectedGuild, /* dashboard: client.guilds.get(selectedGuild).dashboard */ });
     } else {
         res.render('noDashboard.ejs', { navbar: await buildNavbarData(req), user, guild: selectedGuild, invite: client.invite });
     }
-}))
+}));
+io.on('connection', function (socket) {
+    console.log('a user connected');
+});
 // Shop Stuff
 // app.get('/shop/:guildID', requireAuth, asyncRoute(async (req, res) => {
 //     const { guildID } = req.params;
@@ -301,4 +307,4 @@ app.use((req, res, next) => {
     res.status(404);
     res.render('404', { url: req.originalUrl });
 })
-app.listen(process.env.PORT);
+http.listen(process.env.PORT);
